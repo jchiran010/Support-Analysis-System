@@ -1,0 +1,67 @@
+{% extends "dashboard.html" %}
+
+{% block content %}
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h5 class="mb-0 fw-bold">Support Analysis</h5>
+        </div>
+
+        <ul class="list-unstyled components">
+            <li class="{% if current_page == 'dashboard' %}active{% endif %}">
+                <a href="{{ url_for('dashboard') }}"><i class="bi bi-grid-1x2-fill me-2"></i> Dashboard</a>
+            </li>
+            <li class="{% if current_page == 'complaints' %}active{% endif %}">
+                <a href="{{ url_for('dummy_page', page_name='complaints') }}"><i class="bi bi-chat-square-text-fill me-2"></i> Complaints</a>
+            </li>
+            {% if role == 'admin' %}
+            <li class="{% if current_page == 'analytics' %}active{% endif %}">
+                <a href="{{ url_for('dummy_page', page_name='analytics') }}"><i class="bi bi-bar-chart-fill me-2"></i> Analytics</a>
+            </li>
+            <li class="{% if current_page == 'reports' %}active{% endif %}">
+                <a href="{{ url_for('dummy_page', page_name='reports') }}"><i class="bi bi-file-earmark-pdf-fill me-2"></i> Reports</a>
+            </li>
+            <li class="{% if current_page == 'users' %}active{% endif %}">
+                <a href="{{ url_for('dummy_page', page_name='users') }}"><i class="bi bi-people-fill me-2"></i> Users Management</a>
+            </li>
+            {% endif %}
+            <li class="{% if current_page == 'notifications' %}active{% endif %}">
+                <a href="{{ url_for('dummy_page', page_name='notifications') }}"><i class="bi bi-bell-fill me-2"></i> Notifications</a>
+            </li>
+            <li class="{% if current_page == 'settings' %}active{% endif %}">
+                <a href="{{ url_for('dummy_page', page_name='settings') }}"><i class="bi bi-gear-fill me-2"></i> Settings</a>
+            </li>
+            <li>
+                <a href="{{ url_for('logout') }}"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="content">
+        <nav class="navbar navbar-expand-lg navbar-custom rounded shadow-sm mb-4 p-2">
+            <div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class="btn btn-toggle">
+                    <i class="bi bi-list"></i>
+                </button>
+                <div class="ms-auto d-flex align-items-center">
+                    <button class="btn btn-toggle ms-2 rounded-circle" id="darkModeToggle" title="Toggle Dark Theme">
+                        <i class="bi bi-moon-stars-fill"></i>
+                    </button>
+                    <div class="ms-3 fw-bold">
+                        Welcome, {{ name }} ({{ role|capitalize }})
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <h3 class="mb-4 fw-bold">{{ page_name }}</h3>
+
+        <div class="dashboard-card">
+            <h5 class="mb-3">Welcome to the {{ page_name }} module</h5>
+            <p class="text-muted">This page is under construction. It will contain the features related to {{ page_name }}.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}

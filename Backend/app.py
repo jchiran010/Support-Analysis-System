@@ -56,7 +56,16 @@ def dashboard():
     
     role = session.get('role', 'user')
     name = session.get('name', 'User')
-    return render_template('dashboard.html', role=role, name=name)
+    return render_template('dashboard.html', role=role, name=name, current_page='dashboard')
+
+@app.route('/page/<page_name>')
+def dummy_page(page_name):
+    if 'user_id' not in session:
+        return redirect(url_for('login'))
+    
+    role = session.get('role', 'user')
+    name = session.get('name', 'User')
+    return render_template('dummy.html', role=role, name=name, page_name=page_name.replace('-', ' ').title(), current_page=page_name)
 
 @app.route('/logout')
 def logout():
