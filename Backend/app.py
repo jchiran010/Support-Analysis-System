@@ -3,14 +3,21 @@ from flask import Flask, render_template, redirect, url_for, request, flash, ses
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 
+basedir = os.path.abspath(os.path.dirname(__file__))
+
 app = Flask(__name__, 
-            template_folder='../Frontend/templates', 
-            static_folder='../Frontend/static')
+            template_folder=os.path.join(basedir, '../Frontend/templates'), 
+            static_folder=os.path.join(basedir, '../Frontend/static'))
 
 app.config['SECRET_KEY'] = 'enterprise_secret_key_123'
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, '../Database/complaints.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+if os.environ.get('VERCEL'):
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/complaints.db'
+else:
+    db_dir = os.path.join(basedir, '../Database')
+    os.makedirs(db_dir, exist_ok=True)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(db_dir, 'complaints.db')
 
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
