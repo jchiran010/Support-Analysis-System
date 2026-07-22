@@ -27,16 +27,26 @@
         document.addEventListener('DOMContentLoaded', () => {
             const btn = document.getElementById('darkModeToggle');
             if (btn) {
+                const updateToggleIcon = (theme) => {
+                    const iconEl = btn.querySelector('i');
+                    if (iconEl) {
+                        iconEl.className = theme === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill';
+                    } else {
+                        btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+                    }
+                };
+
                 btn.addEventListener('click', () => {
-                    const cur = document.documentElement.getAttribute('data-theme');
+                    const cur = document.documentElement.getAttribute('data-theme') || 'light';
                     const next = cur === 'dark' ? 'light' : 'dark';
                     document.documentElement.setAttribute('data-theme', next);
                     localStorage.setItem('theme', next);
-                    btn.querySelector('i').className = next === 'dark' ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill';
+                    updateToggleIcon(next);
                 });
+
                 // Set correct icon on load
-                const cur = document.documentElement.getAttribute('data-theme');
-                if (cur === 'dark') btn.querySelector('i').className = 'bi bi-sun-fill';
+                const cur = document.documentElement.getAttribute('data-theme') || 'light';
+                updateToggleIcon(cur);
             }
 
             // Sidebar toggle
