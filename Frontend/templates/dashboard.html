@@ -215,6 +215,10 @@
             sidebar.classList.toggle('active');
         });
 
+        // Set Chart.js global defaults for better visibility
+        Chart.defaults.color = '#a8b2d1';
+        Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+
         // Initialize charts only if they exist (Admin view)
         const trendsEl = document.getElementById('trendsChart');
         if (trendsEl) {
