@@ -1,0 +1,204 @@
+:root {
+    --primary-dark-blue: #0F172A;
+    --secondary-blue: #1E3A8A;
+    --royal-blue: #2563EB;
+    --light-blue: #60A5FA;
+    --background: #F8FAFC;
+    --white: #FFFFFF;
+    --gray: #CBD5E1;
+    --text-dark: #334155;
+}
+
+body {
+    background-color: var(--background);
+    color: var(--text-dark);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+/* Splash Screen */
+#splash-screen {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, var(--primary-dark-blue), var(--secondary-blue));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    color: var(--white);
+    animation: fadeOut 1s ease 4s forwards;
+}
+
+.splash-logo {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 2rem;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(96, 165, 250, 0.5);
+}
+
+.splash-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.loader {
+    width: 200px;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.loader-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--light-blue);
+    animation: progress 4s ease-in-out forwards;
+}
+
+@keyframes progress {
+    0% { width: 0%; }
+    100% { width: 100%; }
+}
+
+@keyframes fadeOut {
+    to { opacity: 0; visibility: hidden; }
+}
+
+/* Glassmorphism Login */
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--primary-dark-blue), var(--royal-blue));
+    padding: 2rem;
+}
+
+.login-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 3rem;
+    width: 100%;
+    max-width: 450px;
+    color: var(--white);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.login-card .form-control {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--white);
+}
+.login-card .form-control:focus {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--light-blue);
+    box-shadow: 0 0 0 0.25rem rgba(96, 165, 250, 0.25);
+    color: var(--white);
+}
+
+.btn-primary-custom {
+    background-color: var(--royal-blue);
+    border: none;
+    padding: 0.75rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+.btn-primary-custom:hover {
+    background-color: var(--light-blue);
+    transform: translateY(-2px);
+}
+
+/* Dashboard Sidebar */
+.wrapper {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+}
+
+#sidebar {
+    min-width: 250px;
+    max-width: 250px;
+    background: var(--primary-dark-blue);
+    color: var(--white);
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
+#sidebar.active {
+    margin-left: -250px;
+}
+
+#sidebar .sidebar-header {
+    padding: 20px;
+    background: var(--secondary-blue);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#sidebar ul.components {
+    padding: 20px 0;
+}
+
+#sidebar ul li a {
+    padding: 15px 20px;
+    font-size: 1.1em;
+    display: block;
+    color: var(--gray);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+#sidebar ul li a:hover {
+    color: var(--white);
+    background: var(--royal-blue);
+}
+
+#sidebar ul li.active > a {
+    color: var(--white);
+    background: var(--royal-blue);
+    border-left: 4px solid var(--light-blue);
+}
+
+/* Dashboard Content */
+#content {
+    width: 100%;
+    padding: 20px;
+    min-height: 100vh;
+    transition: all 0.3s;
+}
+
+.dashboard-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border: none;
+    transition: transform 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-dark-blue);
+}
+
+.chart-container {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
