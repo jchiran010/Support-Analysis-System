@@ -20,11 +20,13 @@
     --sidebar-text: #E9D5FF;
     --card-bg: #1f1f1f;
     --text-main: #F3E8FF;
-    --text-muted: #A855F7;
+    --text-muted: #c4b5fd !important;
     --accent: #8b5cf6;
     --border-color: #3b0764;
     --splash-bg: linear-gradient(135deg, #2e1065, #4c1d95);
 }
+
+[data-theme='dark'] .text-dark { color: #f3e8ff !important; }
 
 body {
     background-color: var(--primary-bg);
@@ -49,11 +51,25 @@ body {
     animation: fadeOut 1s ease 4s forwards;
 }
 
+.splash-logo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    box-shadow: 0 0 30px rgba(255,255,255,0.2);
+    animation: pulseLogo 2s infinite;
+}
+
+@keyframes pulseLogo {
+    0% { transform: scale(1); box-shadow: 0 0 30px rgba(255,255,255,0.2); }
+    50% { transform: scale(1.05); box-shadow: 0 0 50px rgba(255,255,255,0.4); }
+    100% { transform: scale(1); box-shadow: 0 0 30px rgba(255,255,255,0.2); }
+}
+
 .splash-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 800;
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
@@ -64,7 +80,7 @@ body {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 3px;
     overflow: hidden;
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .loader-bar {
@@ -83,6 +99,34 @@ body {
     to { opacity: 0; visibility: hidden; }
 }
 
+/* Login Background Animation */
+.background-animation {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    overflow: hidden;
+    z-index: 0;
+}
+.background-animation span {
+    position: absolute;
+    display: block;
+    width: 20px;
+    height: 20px;
+    background: rgba(255,255,255,0.1);
+    animation: float 25s linear infinite;
+    bottom: -150px;
+    border-radius: 50%;
+}
+.background-animation span:nth-child(1) { left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
+.background-animation span:nth-child(2) { left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
+.background-animation span:nth-child(3) { left: 70%; width: 100px; height: 100px; animation-delay: 4s; }
+.background-animation span:nth-child(4) { left: 40%; width: 60px; height: 60px; animation-delay: 0s; animation-duration: 18s; }
+.background-animation span:nth-child(5) { left: 65%; width: 20px; height: 20px; animation-delay: 0s; }
+
+@keyframes float {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+}
+
 /* Glassmorphism Login */
 .login-container {
     min-height: 100vh;
@@ -91,45 +135,62 @@ body {
     justify-content: center;
     background: var(--splash-bg);
     padding: 2rem;
+    position: relative;
 }
 
 .login-card {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     padding: 3rem;
     width: 100%;
     max-width: 450px;
     color: #FFF;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    position: relative;
+    z-index: 1;
+    transform: translateY(0);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.login-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
 }
 
-.login-card .form-control {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #FFF;
+.glass-input {
+    background: rgba(0, 0, 0, 0.2) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: #FFF !important;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
 }
-.login-card .form-control:focus {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: #FFF;
-    box-shadow: 0 0 0 0.25rem rgba(255,255,255,0.25);
-    color: #FFF;
+.glass-input:focus {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border-color: var(--light-blue) !important;
+    box-shadow: 0 0 15px rgba(96, 165, 250, 0.5) !important;
 }
 
 .btn-primary-custom {
-    background-color: var(--accent);
+    background: linear-gradient(45deg, var(--accent), #3b82f6);
     color: #FFF;
     border: none;
     padding: 0.75rem;
-    font-weight: 600;
+    font-weight: 700;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
 }
 .btn-primary-custom:hover {
-    background-color: var(--sidebar-hover);
+    background: linear-gradient(45deg, #3b82f6, var(--accent));
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
     color: #FFF;
-    transform: translateY(-2px);
+}
+
+.hover-glow:hover {
+    color: #fff !important;
+    text-shadow: 0 0 8px rgba(255,255,255,0.8);
 }
 
 /* Dashboard Sidebar */
@@ -145,7 +206,8 @@ body {
     background: var(--sidebar-bg);
     color: var(--sidebar-text);
     min-height: 100vh;
-    transition: all 0.3s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
 }
 
 #sidebar.active {
@@ -172,12 +234,14 @@ body {
     color: var(--sidebar-text);
     opacity: 0.8;
     text-decoration: none;
-    transition: 0.3s;
+    transition: all 0.3s ease;
+    border-left: 0px solid transparent;
 }
 
 #sidebar ul li a:hover {
     opacity: 1;
     background: rgba(255,255,255,0.1);
+    padding-left: 25px;
 }
 
 #sidebar ul li.active > a {
@@ -200,17 +264,17 @@ body {
     padding: 20px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     border: 1px solid var(--border-color);
-    transition: transform 0.3s ease, background-color 0.3s;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, background-color 0.3s;
     color: var(--text-main);
 }
 
 .dashboard-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 15px 25px rgba(0,0,0,0.15);
 }
 
 .stat-value {
-    font-size: 2.2rem;
+    font-size: 2.5rem;
     font-weight: 800;
     color: var(--text-main);
 }
@@ -223,9 +287,14 @@ body {
 
 .table {
     color: var(--text-main);
+    transition: all 0.3s;
+}
+.table-hover tbody tr {
+    transition: background-color 0.2s, transform 0.2s;
 }
 .table-hover tbody tr:hover {
     background-color: rgba(0,0,0,0.05);
+    transform: scale(1.01);
 }
 [data-theme="dark"] .table-hover tbody tr:hover {
     background-color: rgba(255,255,255,0.05);
@@ -251,7 +320,8 @@ body {
     background: var(--primary-bg);
     color: var(--text-main);
     border: 1px solid var(--border-color);
+    transition: transform 0.3s;
 }
-
-[data-theme='dark'] .text-muted { color: #c4b5fd !important; }
-[data-theme='dark'] .text-dark { color: #f3e8ff !important; }
+.btn-toggle:hover {
+    transform: rotate(15deg);
+}
