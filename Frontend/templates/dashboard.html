@@ -62,49 +62,89 @@
         <!-- ADMIN VIEW -->
         <div class="row g-4 mb-4">
             <div class="col-md-3">
-                <div class="dashboard-card border-start border-primary border-4 h-100">
-                    <h6 class="text-muted text-uppercase mb-2 fw-bold">Total Complaints</h6>
-                    <div class="stat-value">1,284</div>
-                    <div class="text-success small mt-2"><i class="bi bi-arrow-up"></i> 12% since last month</div>
+                <div class="dashboard-card gradient-border h-100" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+                    <div class="skeleton-wrapper">
+                        <div class="skeleton w-75 mb-2"></div>
+                        <div class="skeleton w-50 h-2 mb-2" style="height: 2.5rem;"></div>
+                        <div class="skeleton w-100"></div>
+                    </div>
+                    <div class="real-content content-hidden">
+                        <h6 class="text-muted text-uppercase mb-2 fw-bold">Total Complaints</h6>
+                        <div class="stat-value">1,284</div>
+                        <div class="text-success small mt-2 fw-bold"><i class="bi bi-arrow-up"></i> 12% since last month</div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="dashboard-card border-start border-warning border-4 h-100">
-                    <h6 class="text-muted text-uppercase mb-2 fw-bold">Pending Approval</h6>
-                    <div class="stat-value text-warning">142</div>
-                    <div class="text-danger small mt-2"><i class="bi bi-arrow-up"></i> 5% since yesterday</div>
+                <div class="dashboard-card gradient-border h-100" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+                    <div class="skeleton-wrapper">
+                        <div class="skeleton w-75 mb-2"></div>
+                        <div class="skeleton w-50 h-2 mb-2" style="height: 2.5rem;"></div>
+                        <div class="skeleton w-100"></div>
+                    </div>
+                    <div class="real-content content-hidden">
+                        <h6 class="text-muted text-uppercase mb-2 fw-bold">Pending Approval</h6>
+                        <div class="stat-value text-warning">142</div>
+                        <div class="text-danger small mt-2 fw-bold"><i class="bi bi-arrow-up"></i> 5% since yesterday</div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="dashboard-card border-start border-success border-4 h-100">
-                    <h6 class="text-muted text-uppercase mb-2 fw-bold">Resolved</h6>
-                    <div class="stat-value text-success">1,105</div>
-                    <div class="text-success small mt-2"><i class="bi bi-arrow-up"></i> 18% since last month</div>
+                <div class="dashboard-card gradient-border h-100" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+                    <div class="skeleton-wrapper">
+                        <div class="skeleton w-75 mb-2"></div>
+                        <div class="skeleton w-50 h-2 mb-2" style="height: 2.5rem;"></div>
+                        <div class="skeleton w-100"></div>
+                    </div>
+                    <div class="real-content content-hidden">
+                        <h6 class="text-muted text-uppercase mb-2 fw-bold">Resolved</h6>
+                        <div class="stat-value text-success">1,105</div>
+                        <div class="text-success small mt-2 fw-bold"><i class="bi bi-arrow-up"></i> 18% since last month</div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="dashboard-card border-start border-danger border-4 h-100">
-                    <h6 class="text-muted text-uppercase mb-2 fw-bold">High Priority Escalations</h6>
-                    <div class="stat-value text-danger">37</div>
-                    <div class="text-muted small mt-2">Requires immediate action</div>
+                <div class="dashboard-card gradient-border h-100" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare data-tilt-max-glare="0.2">
+                    <div class="skeleton-wrapper">
+                        <div class="skeleton w-75 mb-2"></div>
+                        <div class="skeleton w-50 h-2 mb-2" style="height: 2.5rem;"></div>
+                        <div class="skeleton w-100"></div>
+                    </div>
+                    <div class="real-content content-hidden">
+                        <h6 class="text-muted text-uppercase mb-2 fw-bold">High Priority Escalations</h6>
+                        <div class="stat-value text-danger">37</div>
+                        <div class="text-muted small mt-2 fw-bold">Requires immediate action</div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="row g-4">
             <div class="col-md-8">
-                <div class="dashboard-card h-100">
-                    <h5 class="mb-4 fw-bold">System-wide Complaint Trends</h5>
-                    <div class="chart-container">
-                        <canvas id="trendsChart"></canvas>
+                <div class="dashboard-card gradient-border h-100">
+                    <div class="skeleton-wrapper">
+                        <div class="skeleton w-50 mb-4" style="height: 2rem;"></div>
+                        <div class="skeleton w-100" style="height: 250px;"></div>
+                    </div>
+                    <div class="real-content content-hidden">
+                        <h5 class="mb-4 fw-bold">System-wide Complaint Trends</h5>
+                        <div class="chart-container">
+                            <canvas id="trendsChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="dashboard-card h-100">
-                    <h5 class="mb-4 fw-bold">Complaints by Category</h5>
-                    <div class="chart-container">
-                        <canvas id="categoryChart"></canvas>
+                <div class="dashboard-card gradient-border h-100">
+                    <div class="skeleton-wrapper">
+                        <div class="skeleton w-75 mb-4" style="height: 2rem;"></div>
+                        <div class="skeleton w-100 rounded-circle mx-auto" style="height: 200px; width: 200px;"></div>
+                    </div>
+                    <div class="real-content content-hidden">
+                        <h5 class="mb-4 fw-bold">Complaints by Category</h5>
+                        <div class="chart-container">
+                            <canvas id="categoryChart"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -114,89 +154,169 @@
         <!-- USER VIEW -->
         <div class="row g-4 mb-4">
             <div class="col-md-4">
-                <div class="dashboard-card border-start border-primary border-4 h-100">
-                    <h6 class="text-muted text-uppercase mb-2 fw-bold">My Submitted Complaints</h6>
-                    <div class="stat-value">12</div>
+                <div class="dashboard-card gradient-border h-100" data-tilt data-tilt-max="5" data-tilt-speed="400">
+                    <div class="skeleton-wrapper">
+                        <div class="skeleton w-75 mb-2"></div>
+                        <div class="skeleton w-50 mb-2" style="height: 2.5rem;"></div>
+                    </div>
+                    <div class="real-content content-hidden">
+                        <h6 class="text-muted text-uppercase mb-2 fw-bold">My Submitted Complaints</h6>
+                        <div class="stat-value">12</div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="dashboard-card border-start border-warning border-4 h-100">
-                    <h6 class="text-muted text-uppercase mb-2 fw-bold">In Progress</h6>
-                    <div class="stat-value text-warning">3</div>
+                <div class="dashboard-card gradient-border h-100" data-tilt data-tilt-max="5" data-tilt-speed="400">
+                    <div class="skeleton-wrapper">
+                        <div class="skeleton w-75 mb-2"></div>
+                        <div class="skeleton w-50 mb-2" style="height: 2.5rem;"></div>
+                    </div>
+                    <div class="real-content content-hidden">
+                        <h6 class="text-muted text-uppercase mb-2 fw-bold">In Progress</h6>
+                        <div class="stat-value text-warning">3</div>
+                    </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="dashboard-card border-start border-success border-4 h-100">
-                    <h6 class="text-muted text-uppercase mb-2 fw-bold">Resolved Successfully</h6>
-                    <div class="stat-value text-success">9</div>
+                <div class="dashboard-card gradient-border h-100" data-tilt data-tilt-max="5" data-tilt-speed="400">
+                    <div class="skeleton-wrapper">
+                        <div class="skeleton w-75 mb-2"></div>
+                        <div class="skeleton w-50 mb-2" style="height: 2.5rem;"></div>
+                    </div>
+                    <div class="real-content content-hidden">
+                        <h6 class="text-muted text-uppercase mb-2 fw-bold">Resolved Successfully</h6>
+                        <div class="stat-value text-success">9</div>
+                    </div>
                 </div>
             </div>
         </div>
         
         <div class="row g-4 mb-4">
-            <div class="col-12">
-                 <div class="dashboard-card">
-                     <h5 class="mb-4 fw-bold">Submit a New Complaint</h5>
-                     <button class="btn btn-primary-custom px-4"><i class="bi bi-plus-lg me-2"></i>Create New Ticket</button>
+            <div class="col-md-8">
+                <div class="dashboard-card gradient-border h-100">
+                    <div class="skeleton-wrapper">
+                        <div class="skeleton w-50 mb-4" style="height: 2rem;"></div>
+                        <div class="skeleton w-100" style="height: 250px;"></div>
+                    </div>
+                    <div class="real-content content-hidden">
+                        <h5 class="mb-4 fw-bold">My Personal Complaint Trends</h5>
+                        <div class="chart-container">
+                            <canvas id="userTrendsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                 <div class="dashboard-card gradient-border h-100 d-flex flex-column justify-content-center align-items-center text-center">
+                     <div class="skeleton-wrapper w-100">
+                         <div class="skeleton w-75 mb-4 mx-auto" style="height: 2rem;"></div>
+                         <div class="skeleton w-50 mx-auto" style="height: 3rem;"></div>
+                     </div>
+                     <div class="real-content content-hidden w-100">
+                         <i class="bi bi-headset display-1 text-primary mb-3"></i>
+                         <h5 class="mb-4 fw-bold">Need Help?</h5>
+                         <button class="btn btn-primary-custom px-4 w-100" data-bs-toggle="modal" data-bs-target="#newComplaintModal"><i class="bi bi-plus-lg me-2"></i>Create New Ticket</button>
+                     </div>
                  </div>
             </div>
+        </div>
+
+        <!-- Complaint Submission Modal -->
+        <div class="modal fade" id="newComplaintModal" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content glass-modal border-0 shadow-lg">
+              <div class="modal-header border-0">
+                <h5 class="modal-title fw-bold"><i class="bi bi-pencil-square me-2"></i> Submit New Complaint</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="mb-3">
+                    <label class="form-label text-muted fw-bold">Subject</label>
+                    <input type="text" class="form-control glass-input" placeholder="Briefly describe the issue">
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label text-muted fw-bold">Category</label>
+                    <select class="form-select glass-input text-dark">
+                      <option selected>Billing</option>
+                      <option>Technical Support</option>
+                      <option>Feature Request</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label text-muted fw-bold">Priority</label>
+                    <select class="form-select glass-input text-dark">
+                      <option value="low">Low</option>
+                      <option value="medium" selected>Medium</option>
+                      <option value="high">High</option>
+                    </select>
+                  </div>
+                  <div class="mb-4">
+                    <label class="form-label text-muted fw-bold">Attachment (Optional)</label>
+                    <input class="form-control glass-input" type="file">
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer border-0">
+                <button type="button" class="btn btn-secondary glass-input" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary-custom px-4" data-bs-dismiss="modal" onclick="alert('Complaint submitted successfully!')">Submit</button>
+              </div>
+            </div>
+          </div>
         </div>
         {% endif %}
 
         <div class="row g-4 mt-1">
              <div class="col-12">
                  <div class="dashboard-card">
-                     <div class="d-flex justify-content-between align-items-center mb-4">
-                         <h5 class="mb-0 fw-bold">{% if role == 'admin' %}Recent Global Tickets{% else %}My Recent Tickets{% endif %}</h5>
-                         <button class="btn btn-sm btn-primary-custom">View All</button>
+                     <div class="skeleton-wrapper">
+                         <div class="skeleton w-25 mb-4" style="height: 2rem;"></div>
+                         <div class="skeleton w-100" style="height: 150px;"></div>
                      </div>
-                     <div class="table-responsive">
-                         <table class="table table-hover align-middle">
-                             <thead class="table-light">
-                                 <tr>
-                                     <th>Ticket ID</th>
-                                     {% if role == 'admin' %}<th>Customer</th>{% endif %}
-                                     <th>Subject</th>
-                                     <th>Category</th>
-                                     <th>Status</th>
-                                     <th>Priority</th>
-                                     <th>Date</th>
-                                     <th>Action</th>
-                                 </tr>
-                             </thead>
-                             <tbody>
-                                 <tr>
-                                     <td>#TKT-8891</td>
-                                     {% if role == 'admin' %}<td>John Doe</td>{% endif %}
-                                     <td>Unable to process payment</td>
-                                     <td>Billing Issue</td>
-                                     <td><span class="badge bg-warning text-dark">Pending</span></td>
-                                     <td><span class="badge bg-danger">High</span></td>
-                                     <td>Today, 10:45 AM</td>
-                                     <td><button class="btn btn-sm btn-toggle border"><i class="bi bi-eye"></i></button></td>
-                                 </tr>
-                                 <tr>
-                                     <td>#TKT-8890</td>
-                                     {% if role == 'admin' %}<td>Jane Smith</td>{% endif %}
-                                     <td>App crashing on startup</td>
-                                     <td>Technical Support</td>
-                                     <td><span class="badge bg-success">Resolved</span></td>
-                                     <td><span class="badge bg-info text-dark">Low</span></td>
-                                     <td>Yesterday</td>
-                                     <td><button class="btn btn-sm btn-toggle border"><i class="bi bi-eye"></i></button></td>
-                                 </tr>
-                                 <tr>
-                                     <td>#TKT-8885</td>
-                                     {% if role == 'admin' %}<td>Acme Corp</td>{% endif %}
-                                     <td>Requesting dark mode</td>
-                                     <td>Feature Request</td>
-                                     <td><span class="badge bg-primary">In Progress</span></td>
-                                     <td><span class="badge bg-secondary">Medium</span></td>
-                                     <td>2026-07-20</td>
-                                     <td><button class="btn btn-sm btn-toggle border"><i class="bi bi-eye"></i></button></td>
-                                 </tr>
-                             </tbody>
-                         </table>
+                     <div class="real-content content-hidden">
+                         <div class="d-flex justify-content-between align-items-center mb-4">
+                             <h5 class="mb-0 fw-bold">{% if role == 'admin' %}Recent Global Tickets{% else %}My Recent Tickets{% endif %}</h5>
+                             <button class="btn btn-sm btn-primary-custom">View All</button>
+                         </div>
+                         <div class="table-responsive">
+                             <table class="table table-hover align-middle">
+                                 <thead class="table-light">
+                                     <tr>
+                                         <th>Ticket ID</th>
+                                         {% if role == 'admin' %}<th>Customer</th>{% endif %}
+                                         <th>Subject</th>
+                                         <th>Category</th>
+                                         <th>Status</th>
+                                         <th>Priority</th>
+                                         <th>Date</th>
+                                         <th>Action</th>
+                                     </tr>
+                                 </thead>
+                                 <tbody>
+                                     <tr>
+                                         <td>#TKT-8891</td>
+                                         {% if role == 'admin' %}<td>John Doe</td>{% endif %}
+                                         <td>Unable to process payment</td>
+                                         <td>Billing Issue</td>
+                                         <td><span class="badge bg-warning text-dark">Pending</span></td>
+                                         <td><span class="badge bg-danger">High</span></td>
+                                         <td>Today, 10:45 AM</td>
+                                         <td><button class="btn btn-sm btn-toggle border"><i class="bi bi-eye"></i></button></td>
+                                     </tr>
+                                     <tr>
+                                         <td>#TKT-8890</td>
+                                         {% if role == 'admin' %}<td>Jane Smith</td>{% endif %}
+                                         <td>App crashing on startup</td>
+                                         <td>Technical Support</td>
+                                         <td><span class="badge bg-success">Resolved</span></td>
+                                         <td><span class="badge bg-info text-dark">Low</span></td>
+                                         <td>Yesterday</td>
+                                         <td><button class="btn btn-sm btn-toggle border"><i class="bi bi-eye"></i></button></td>
+                                     </tr>
+                                 </tbody>
+                             </table>
+                         </div>
                      </div>
                  </div>
              </div>
@@ -206,8 +326,18 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
+        // Skeleton loader logic
+        setTimeout(() => {
+            document.querySelectorAll('.skeleton-wrapper').forEach(el => el.classList.add('d-none'));
+            document.querySelectorAll('.real-content').forEach(el => {
+                el.classList.remove('content-hidden');
+                el.classList.add('animate__animated', 'animate__fadeIn');
+            });
+        }, 1500); // 1.5 second loading simulation
+
         const sidebarCollapse = document.getElementById('sidebarCollapse');
         const sidebar = document.getElementById('sidebar');
         
@@ -218,8 +348,9 @@
         // Set Chart.js global defaults for better visibility
         Chart.defaults.color = '#a8b2d1';
         Chart.defaults.borderColor = 'rgba(255, 255, 255, 0.1)';
+        Chart.defaults.font.family = "'Inter', sans-serif";
 
-        // Initialize charts only if they exist (Admin view)
+        // Admin Charts
         const trendsEl = document.getElementById('trendsChart');
         if (trendsEl) {
             const ctxTrends = trendsEl.getContext('2d');
@@ -230,16 +361,15 @@
                     datasets: [{
                         label: 'Complaints Escalated',
                         data: [65, 59, 80, 81, 56, 55, 40],
-                        backgroundColor: '#8b5cf6',
-                        borderRadius: 5
+                        backgroundColor: 'rgba(139, 92, 246, 0.8)',
+                        borderRadius: 8
                     }]
                 },
                 options: { 
                     responsive: true, 
                     maintainAspectRatio: false,
-                    scales: {
-                        y: { beginAtZero: true }
-                    }
+                    animation: { duration: 2000, easing: 'easeOutQuart' },
+                    scales: { y: { beginAtZero: true } }
                 }
             });
         }
@@ -248,24 +378,46 @@
         if (categoryEl) {
             const ctxCategory = categoryEl.getContext('2d');
             new Chart(ctxCategory, {
-                type: 'pie',
+                type: 'doughnut',
                 data: {
                     labels: ['Billing', 'Tech Support', 'Sales', 'Other'],
                     datasets: [{
                         data: [300, 500, 100, 100],
-                        backgroundColor: [
-                            '#4c1d95',
-                            '#8b5cf6',
-                            '#c084fc',
-                            '#e9d5ff'
-                        ],
+                        backgroundColor: ['#4c1d95', '#8b5cf6', '#c084fc', '#e9d5ff'],
                         borderWidth: 0,
-                        hoverOffset: 4
+                        hoverOffset: 10
                     }]
                 },
-                options: { responsive: true, maintainAspectRatio: false }
+                options: { responsive: true, maintainAspectRatio: false, animation: { duration: 2000 } }
+            });
+        }
+
+        // User Chart
+        const userTrendsEl = document.getElementById('userTrendsChart');
+        if (userTrendsEl) {
+            const ctxUserTrends = userTrendsEl.getContext('2d');
+            new Chart(ctxUserTrends, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    datasets: [{
+                        label: 'My Complaints',
+                        data: [1, 2, 0, 4, 1, 3, 1],
+                        borderColor: '#3b82f6',
+                        backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    animation: { duration: 2000, easing: 'easeOutQuart' },
+                    scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
+                }
             });
         }
     });
 </script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 {% endblock %}

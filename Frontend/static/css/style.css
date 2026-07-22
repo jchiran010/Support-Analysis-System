@@ -337,3 +337,17 @@ input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:foc
 [data-theme='dark'] .text-danger { color: #f87171 !important; }
 [data-theme='dark'] .text-warning { color: #facc15 !important; }
 [data-theme='dark'] .text-muted { color: #d8b4fe !important; }
+
+/* Premium Animations & Skeletons */
+.dashboard-card { position: relative; overflow: hidden; }
+.gradient-border { position: relative; border-radius: 12px; }
+.gradient-border::before { content: ''; position: absolute; top:-2px; left:-2px; right:-2px; bottom:-2px; z-index: -1; background: linear-gradient(45deg, #2563EB, #8b5cf6, #3b82f6, #4c1d95); background-size: 400%; border-radius: 14px; animation: gradientAnim 5s ease infinite; opacity: 0; transition: opacity 0.3s ease; }
+.gradient-border:hover::before { opacity: 1; }
+@keyframes gradientAnim { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
+/* Skeleton Loader */
+.skeleton { background: linear-gradient(90deg, var(--border-color) 25%, rgba(255,255,255,0.05) 50%, var(--border-color) 75%); background-size: 200% 100%; animation: skeletonLoading 1.5s infinite; border-radius: 4px; display: inline-block; min-height: 1em; width: 100%; }
+@keyframes skeletonLoading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+.content-hidden { display: none !important; }
+/* Glass Modal */
+.modal-content.glass-modal { background: rgba(30, 30, 30, 0.6); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.2); color: #fff; }
+[data-theme='light'] .modal-content.glass-modal { background: rgba(255, 255, 255, 0.8); color: #000; }
