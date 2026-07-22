@@ -31,11 +31,19 @@ def splash():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        # Dummy authentication for now
         username = request.form.get('username')
         password = request.form.get('password')
+        
+        # Simple role-based auth for demo
         if username == 'admin' and password == 'admin':
             session['user_id'] = 1
+            session['role'] = 'admin'
+            session['name'] = 'Admin User'
+            return redirect(url_for('dashboard'))
+        elif username == 'user' and password == 'user':
+            session['user_id'] = 2
+            session['role'] = 'user'
+            session['name'] = 'Standard User'
             return redirect(url_for('dashboard'))
         else:
             flash('Login Unsuccessful. Please check username and password', 'danger')
@@ -45,11 +53,14 @@ def login():
 def dashboard():
     if 'user_id' not in session:
         return redirect(url_for('login'))
-    return render_template('dashboard.html')
+    
+    role = session.get('role', 'user')
+    name = session.get('name', 'User')
+    return render_template('dashboard.html', role=role, name=name)
 
 @app.route('/logout')
 def logout():
-    session.pop('user_id', None)
+    session.clear()
     return redirect(url_for('login'))
 
 if __name__ == '__main__':

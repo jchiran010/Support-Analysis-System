@@ -4,9 +4,8 @@
 <div class="login-container">
     <div class="login-card">
         <div class="text-center mb-4">
-            <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo" class="rounded-circle mb-3" width="80" height="80">
-            <h3>Welcome Back</h3>
-            <p class="text-light opacity-75">Sign in to your enterprise dashboard</p>
+            <h3 class="fw-bold">Support Analysis System</h3>
+            <p class="text-light opacity-75 mt-2">Sign in to your enterprise dashboard</p>
         </div>
 
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -21,13 +20,13 @@
         {% endwith %}
 
         <form method="POST" action="{{ url_for('login') }}">
-            <div class="form-floating mb-3 text-dark">
+            <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
-                <label for="username"><i class="bi bi-person me-2"></i>Username</label>
+                <label for="username" class="text-dark"><i class="bi bi-person me-2"></i>Username</label>
             </div>
-            <div class="form-floating mb-3 text-dark">
+            <div class="form-floating mb-3">
                 <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-                <label for="password"><i class="bi bi-lock me-2"></i>Password</label>
+                <label for="password" class="text-dark"><i class="bi bi-lock me-2"></i>Password</label>
             </div>
             <div class="d-flex justify-content-between mb-4">
                 <div class="form-check">
@@ -40,7 +39,7 @@
             </div>
             <button type="submit" class="btn btn-primary-custom w-100 mb-3">Sign In</button>
             <div class="text-center">
-                <p class="mb-0">Don't have an account? <a href="#" class="text-light fw-bold">Register</a></p>
+                <p class="mb-0">Test Accounts: admin/admin | user/user</p>
             </div>
         </form>
     </div>

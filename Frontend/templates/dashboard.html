@@ -5,8 +5,7 @@
     <!-- Sidebar  -->
     <nav id="sidebar">
         <div class="sidebar-header">
-            <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Logo" width="40" height="40" class="rounded-circle">
-            <h5 class="mb-0 fw-bold">Enterprise AI</h5>
+            <h5 class="mb-0 fw-bold">Support Analysis</h5>
         </div>
 
         <ul class="list-unstyled components">
@@ -16,6 +15,7 @@
             <li>
                 <a href="#"><i class="bi bi-chat-square-text-fill me-2"></i> Complaints</a>
             </li>
+            {% if role == 'admin' %}
             <li>
                 <a href="#"><i class="bi bi-bar-chart-fill me-2"></i> Analytics</a>
             </li>
@@ -23,10 +23,11 @@
                 <a href="#"><i class="bi bi-file-earmark-pdf-fill me-2"></i> Reports</a>
             </li>
             <li>
-                <a href="#"><i class="bi bi-bell-fill me-2"></i> Notifications</a>
+                <a href="#"><i class="bi bi-people-fill me-2"></i> Users Management</a>
             </li>
+            {% endif %}
             <li>
-                <a href="#"><i class="bi bi-people-fill me-2"></i> Users</a>
+                <a href="#"><i class="bi bi-bell-fill me-2"></i> Notifications</a>
             </li>
             <li>
                 <a href="#"><i class="bi bi-gear-fill me-2"></i> Settings</a>
@@ -39,58 +40,51 @@
 
     <!-- Page Content  -->
     <div id="content">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light rounded shadow-sm mb-4">
+        <nav class="navbar navbar-expand-lg navbar-custom rounded shadow-sm mb-4 p-2">
             <div class="container-fluid">
-                <button type="button" id="sidebarCollapse" class="btn btn-primary-custom">
-                    <i class="bi bi-list text-white"></i>
+                <button type="button" id="sidebarCollapse" class="btn btn-toggle">
+                    <i class="bi bi-list"></i>
                 </button>
                 <div class="ms-auto d-flex align-items-center">
-                    <div class="dropdown">
-                        <button class="btn btn-light border-0 dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-globe me-1"></i> EN
-                        </button>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
-                            <li><a class="dropdown-item" href="#">English</a></li>
-                            <li><a class="dropdown-item" href="#">Tamil</a></li>
-                        </ul>
-                    </div>
-                    <button class="btn btn-light border-0 ms-2" id="darkModeToggle">
-                        <i class="bi bi-moon-stars"></i>
+                    <button class="btn btn-toggle ms-2 rounded-circle" id="darkModeToggle" title="Toggle Dark Theme">
+                        <i class="bi bi-moon-stars-fill"></i>
                     </button>
-                    <div class="ms-3 fw-bold text-dark">
-                        Welcome, Admin
+                    <div class="ms-3 fw-bold">
+                        Welcome, {{ name }} ({{ role|capitalize }})
                     </div>
                 </div>
             </div>
         </nav>
 
-        <h2 class="mb-4">Overview</h2>
+        <h3 class="mb-4 fw-bold">Dashboard Overview</h3>
 
+        {% if role == 'admin' %}
+        <!-- ADMIN VIEW -->
         <div class="row g-4 mb-4">
             <div class="col-md-3">
-                <div class="dashboard-card border-start border-primary border-4">
-                    <h6 class="text-muted text-uppercase mb-2">Total Complaints</h6>
+                <div class="dashboard-card border-start border-primary border-4 h-100">
+                    <h6 class="text-muted text-uppercase mb-2 fw-bold">Total Complaints</h6>
                     <div class="stat-value">1,284</div>
                     <div class="text-success small mt-2"><i class="bi bi-arrow-up"></i> 12% since last month</div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="dashboard-card border-start border-warning border-4">
-                    <h6 class="text-muted text-uppercase mb-2">Pending</h6>
+                <div class="dashboard-card border-start border-warning border-4 h-100">
+                    <h6 class="text-muted text-uppercase mb-2 fw-bold">Pending Approval</h6>
                     <div class="stat-value text-warning">142</div>
                     <div class="text-danger small mt-2"><i class="bi bi-arrow-up"></i> 5% since yesterday</div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="dashboard-card border-start border-success border-4">
-                    <h6 class="text-muted text-uppercase mb-2">Resolved</h6>
+                <div class="dashboard-card border-start border-success border-4 h-100">
+                    <h6 class="text-muted text-uppercase mb-2 fw-bold">Resolved</h6>
                     <div class="stat-value text-success">1,105</div>
                     <div class="text-success small mt-2"><i class="bi bi-arrow-up"></i> 18% since last month</div>
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="dashboard-card border-start border-danger border-4">
-                    <h6 class="text-muted text-uppercase mb-2">High Priority</h6>
+                <div class="dashboard-card border-start border-danger border-4 h-100">
+                    <h6 class="text-muted text-uppercase mb-2 fw-bold">High Priority Escalations</h6>
                     <div class="stat-value text-danger">37</div>
                     <div class="text-muted small mt-2">Requires immediate action</div>
                 </div>
@@ -100,7 +94,7 @@
         <div class="row g-4">
             <div class="col-md-8">
                 <div class="dashboard-card h-100">
-                    <h5 class="mb-4">Complaint Trends (Monthly)</h5>
+                    <h5 class="mb-4 fw-bold">System-wide Complaint Trends</h5>
                     <div class="chart-container">
                         <canvas id="trendsChart"></canvas>
                     </div>
@@ -108,7 +102,7 @@
             </div>
             <div class="col-md-4">
                 <div class="dashboard-card h-100">
-                    <h5 class="mb-4">Complaints by Category</h5>
+                    <h5 class="mb-4 fw-bold">Complaints by Category</h5>
                     <div class="chart-container">
                         <canvas id="categoryChart"></canvas>
                     </div>
@@ -116,19 +110,53 @@
             </div>
         </div>
 
+        {% else %}
+        <!-- USER VIEW -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-4">
+                <div class="dashboard-card border-start border-primary border-4 h-100">
+                    <h6 class="text-muted text-uppercase mb-2 fw-bold">My Submitted Complaints</h6>
+                    <div class="stat-value">12</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="dashboard-card border-start border-warning border-4 h-100">
+                    <h6 class="text-muted text-uppercase mb-2 fw-bold">In Progress</h6>
+                    <div class="stat-value text-warning">3</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="dashboard-card border-start border-success border-4 h-100">
+                    <h6 class="text-muted text-uppercase mb-2 fw-bold">Resolved Successfully</h6>
+                    <div class="stat-value text-success">9</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row g-4 mb-4">
+            <div class="col-12">
+                 <div class="dashboard-card">
+                     <h5 class="mb-4 fw-bold">Submit a New Complaint</h5>
+                     <button class="btn btn-primary-custom px-4"><i class="bi bi-plus-lg me-2"></i>Create New Ticket</button>
+                 </div>
+            </div>
+        </div>
+        {% endif %}
+
         <div class="row g-4 mt-1">
              <div class="col-12">
                  <div class="dashboard-card">
                      <div class="d-flex justify-content-between align-items-center mb-4">
-                         <h5 class="mb-0">Recent Complaints</h5>
-                         <button class="btn btn-sm btn-outline-primary">View All</button>
+                         <h5 class="mb-0 fw-bold">{% if role == 'admin' %}Recent Global Tickets{% else %}My Recent Tickets{% endif %}</h5>
+                         <button class="btn btn-sm btn-primary-custom">View All</button>
                      </div>
                      <div class="table-responsive">
                          <table class="table table-hover align-middle">
                              <thead class="table-light">
                                  <tr>
-                                     <th>ID</th>
-                                     <th>Customer</th>
+                                     <th>Ticket ID</th>
+                                     {% if role == 'admin' %}<th>Customer</th>{% endif %}
+                                     <th>Subject</th>
                                      <th>Category</th>
                                      <th>Status</th>
                                      <th>Priority</th>
@@ -138,31 +166,34 @@
                              </thead>
                              <tbody>
                                  <tr>
-                                     <td>#CMP-001</td>
-                                     <td>John Doe</td>
+                                     <td>#TKT-8891</td>
+                                     {% if role == 'admin' %}<td>John Doe</td>{% endif %}
+                                     <td>Unable to process payment</td>
                                      <td>Billing Issue</td>
                                      <td><span class="badge bg-warning text-dark">Pending</span></td>
                                      <td><span class="badge bg-danger">High</span></td>
-                                     <td>2026-07-22</td>
-                                     <td><button class="btn btn-sm btn-light border"><i class="bi bi-eye"></i></button></td>
+                                     <td>Today, 10:45 AM</td>
+                                     <td><button class="btn btn-sm btn-toggle border"><i class="bi bi-eye"></i></button></td>
                                  </tr>
                                  <tr>
-                                     <td>#CMP-002</td>
-                                     <td>Jane Smith</td>
+                                     <td>#TKT-8890</td>
+                                     {% if role == 'admin' %}<td>Jane Smith</td>{% endif %}
+                                     <td>App crashing on startup</td>
                                      <td>Technical Support</td>
                                      <td><span class="badge bg-success">Resolved</span></td>
                                      <td><span class="badge bg-info text-dark">Low</span></td>
-                                     <td>2026-07-21</td>
-                                     <td><button class="btn btn-sm btn-light border"><i class="bi bi-eye"></i></button></td>
+                                     <td>Yesterday</td>
+                                     <td><button class="btn btn-sm btn-toggle border"><i class="bi bi-eye"></i></button></td>
                                  </tr>
                                  <tr>
-                                     <td>#CMP-003</td>
-                                     <td>Acme Corp</td>
+                                     <td>#TKT-8885</td>
+                                     {% if role == 'admin' %}<td>Acme Corp</td>{% endif %}
+                                     <td>Requesting dark mode</td>
                                      <td>Feature Request</td>
                                      <td><span class="badge bg-primary">In Progress</span></td>
                                      <td><span class="badge bg-secondary">Medium</span></td>
                                      <td>2026-07-20</td>
-                                     <td><button class="btn btn-sm btn-light border"><i class="bi bi-eye"></i></button></td>
+                                     <td><button class="btn btn-sm btn-toggle border"><i class="bi bi-eye"></i></button></td>
                                  </tr>
                              </tbody>
                          </table>
@@ -184,42 +215,53 @@
             sidebar.classList.toggle('active');
         });
 
-        // Chart.js Setup
-        const ctxTrends = document.getElementById('trendsChart').getContext('2d');
-        new Chart(ctxTrends, {
-            type: 'line',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
-                datasets: [{
-                    label: 'Complaints Received',
-                    data: [65, 59, 80, 81, 56, 55, 40],
-                    fill: true,
-                    backgroundColor: 'rgba(37, 99, 235, 0.2)',
-                    borderColor: 'rgb(37, 99, 235)',
-                    tension: 0.4
-                }]
-            },
-            options: { responsive: true, maintainAspectRatio: false }
-        });
+        // Initialize charts only if they exist (Admin view)
+        const trendsEl = document.getElementById('trendsChart');
+        if (trendsEl) {
+            const ctxTrends = trendsEl.getContext('2d');
+            new Chart(ctxTrends, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                    datasets: [{
+                        label: 'Complaints Escalated',
+                        data: [65, 59, 80, 81, 56, 55, 40],
+                        backgroundColor: '#8b5cf6',
+                        borderRadius: 5
+                    }]
+                },
+                options: { 
+                    responsive: true, 
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+        }
 
-        const ctxCategory = document.getElementById('categoryChart').getContext('2d');
-        new Chart(ctxCategory, {
-            type: 'doughnut',
-            data: {
-                labels: ['Billing', 'Tech Support', 'Sales', 'Other'],
-                datasets: [{
-                    data: [300, 500, 100, 100],
-                    backgroundColor: [
-                        '#2563EB',
-                        '#60A5FA',
-                        '#1E3A8A',
-                        '#CBD5E1'
-                    ],
-                    hoverOffset: 4
-                }]
-            },
-            options: { responsive: true, maintainAspectRatio: false }
-        });
+        const categoryEl = document.getElementById('categoryChart');
+        if (categoryEl) {
+            const ctxCategory = categoryEl.getContext('2d');
+            new Chart(ctxCategory, {
+                type: 'pie',
+                data: {
+                    labels: ['Billing', 'Tech Support', 'Sales', 'Other'],
+                    datasets: [{
+                        data: [300, 500, 100, 100],
+                        backgroundColor: [
+                            '#4c1d95',
+                            '#8b5cf6',
+                            '#c084fc',
+                            '#e9d5ff'
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
     });
 </script>
 {% endblock %}
