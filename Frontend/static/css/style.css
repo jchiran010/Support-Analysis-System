@@ -551,3 +551,20 @@ body {
     #sidebar.active { margin-left: 0; }
     .stat-value { font-size: 2rem; }
 }
+
+/* Stat card emoji + label */
+.stat-emoji { font-size: 2rem; margin-bottom: 0.6rem; line-height: 1; }
+.stat-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; color: var(--text-muted) !important; text-transform: uppercase; margin-bottom: 0.4rem; }
+.stat-change { font-size: 0.82rem; font-weight: 600; margin-top: 0.5rem; }
+
+/* Category badges */
+.cat-badge { padding: 3px 10px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; }
+.cat-badge.billing { background: rgba(37,99,235,0.15); color: #2563EB; }
+.cat-badge.tech { background: rgba(8,145,178,0.15); color: #0891b2; }
+.cat-badge.feature { background: rgba(124,58,237,0.15); color: #7c3aed; }
+[data-theme='dark'] .cat-badge.billing { background: rgba(37,99,235,0.25); color: #93c5fd; }
+[data-theme='dark'] .cat-badge.tech { background: rgba(8,145,178,0.25); color: #67e8f9; }
+[data-theme='dark'] .cat-badge.feature { background: rgba(124,58,237,0.25); color: #c4b5fd; }
+
+/* Sidebar emoji links */
+#sidebar ul li a { display: flex; align-items: center; gap: 10px; }

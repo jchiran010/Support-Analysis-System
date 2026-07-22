@@ -13,47 +13,32 @@
         </div>
         <ul>
             <li class="active">
-                <a href="{{ url_for('dashboard') }}">
-                    <i class="bi bi-grid-1x2-fill"></i> Dashboard
-                </a>
+                <a href="{{ url_for('dashboard') }}">📊 Dashboard</a>
             </li>
             <li>
-                <a href="{{ url_for('page', page_name='complaints') }}">
-                    <i class="bi bi-chat-square-text-fill"></i> Complaints
-                </a>
+                <a href="{{ url_for('page', page_name='complaints') }}">💬 Complaints</a>
             </li>
             {% if role == 'admin' %}
             <li>
-                <a href="{{ url_for('page', page_name='analytics') }}">
-                    <i class="bi bi-bar-chart-fill"></i> Analytics
-                </a>
+                <a href="{{ url_for('page', page_name='analytics') }}">📈 Analytics</a>
             </li>
             <li>
-                <a href="{{ url_for('page', page_name='reports') }}">
-                    <i class="bi bi-file-earmark-pdf-fill"></i> Reports
-                </a>
+                <a href="{{ url_for('page', page_name='reports') }}">📄 Reports</a>
             </li>
             <li>
-                <a href="{{ url_for('page', page_name='users') }}">
-                    <i class="bi bi-people-fill"></i> Users
-                </a>
+                <a href="{{ url_for('page', page_name='users') }}">👥 Users</a>
             </li>
             {% endif %}
             <li>
                 <a href="{{ url_for('page', page_name='notifications') }}" style="position:relative;">
-                    <i class="bi bi-bell-fill"></i> Notifications
-                    <span class="notif-badge"></span>
+                    🔔 Notifications <span class="notif-badge"></span>
                 </a>
             </li>
             <li>
-                <a href="{{ url_for('page', page_name='settings') }}">
-                    <i class="bi bi-gear-fill"></i> Settings
-                </a>
+                <a href="{{ url_for('page', page_name='settings') }}">⚙️ Settings</a>
             </li>
             <li>
-                <a href="{{ url_for('logout') }}">
-                    <i class="bi bi-box-arrow-right"></i> Logout
-                </a>
+                <a href="{{ url_for('logout') }}">🚪 Logout</a>
             </li>
         </ul>
     </nav>
@@ -64,10 +49,10 @@
         <!-- Navbar -->
         <nav class="navbar navbar-custom mb-4 px-3 py-2">
             <div class="d-flex align-items-center gap-3 w-100">
-                <button id="sidebarCollapse" class="btn btn-toggle">
-                    <i class="bi bi-list fs-5"></i>
+                <button id="sidebarCollapse" class="btn btn-toggle" style="font-size:1.3rem;line-height:1;padding:6px 12px;">
+                    ☰
                 </button>
-                <span class="fw-700 fs-5 welcome-text">
+                <span class="fw-bold welcome-text">
                     {% if role == 'admin' %}
                         <span class="badge" style="background:linear-gradient(135deg,#2563eb,#7c3aed);font-size:.75rem;padding:4px 10px;border-radius:20px;margin-right:8px;">ADMIN</span>
                     {% else %}
@@ -75,16 +60,15 @@
                     {% endif %}
                     {{ name }}
                 </span>
-                <div class="ms-auto d-flex align-items-center gap-2">
-                    <button class="btn btn-toggle" id="darkModeToggle" title="Toggle Theme">
-                        <i class="bi bi-moon-stars-fill"></i>
+                <div class="ms-auto">
+                    <button class="btn btn-toggle" id="darkModeToggle" title="Toggle Theme" style="font-size:1.2rem;line-height:1;padding:6px 12px;">
+                        🌙
                     </button>
                 </div>
             </div>
         </nav>
 
         <h3 class="fw-bold mb-4" style="color:var(--text-main);">
-            <i class="bi bi-grid-1x2 me-2" style="color:var(--accent);"></i>
             Dashboard Overview
         </h3>
 
@@ -92,72 +76,62 @@
         <!-- ===== ADMIN STATS ===== -->
         <div class="row g-4 mb-4">
             <div class="col-sm-6 col-xl-3">
-                <div class="dashboard-card gradient-border" data-tilt data-tilt-max="8" data-tilt-speed="500" data-tilt-glare data-tilt-max-glare="0.15">
-                    <!-- Skeleton -->
+                <div class="dashboard-card gradient-border h-100" data-tilt data-tilt-max="8" data-tilt-speed="500" data-tilt-glare data-tilt-max-glare="0.15">
                     <div class="skeleton-wrapper">
                         <div class="skeleton mb-2" style="height:14px;width:60%;"></div>
                         <div class="skeleton mb-2" style="height:48px;width:40%;"></div>
                         <div class="skeleton" style="height:12px;width:80%;"></div>
                     </div>
-                    <!-- Real Content -->
                     <div class="real-content content-hidden">
-                        <div class="card-icon" style="background:rgba(37,99,235,0.12);">
-                            <i class="bi bi-clipboard2-data-fill" style="color:#2563EB;"></i>
-                        </div>
-                        <h6 class="text-muted text-uppercase fw-bold">Total Complaints</h6>
+                        <div class="stat-emoji">📋</div>
+                        <h6 class="stat-label">TOTAL COMPLAINTS</h6>
                         <div class="stat-value">1,284</div>
-                        <div class="stat-change text-success mt-2"><i class="bi bi-arrow-up-short"></i> 12% since last month</div>
+                        <div class="stat-change" style="color:#4ade80;">▲ 12% since last month</div>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 col-xl-3">
-                <div class="dashboard-card gradient-border" data-tilt data-tilt-max="8" data-tilt-speed="500" data-tilt-glare data-tilt-max-glare="0.15">
+                <div class="dashboard-card gradient-border h-100" data-tilt data-tilt-max="8" data-tilt-speed="500" data-tilt-glare data-tilt-max-glare="0.15">
                     <div class="skeleton-wrapper">
                         <div class="skeleton mb-2" style="height:14px;width:60%;"></div>
                         <div class="skeleton mb-2" style="height:48px;width:40%;"></div>
                         <div class="skeleton" style="height:12px;width:80%;"></div>
                     </div>
                     <div class="real-content content-hidden">
-                        <div class="card-icon" style="background:rgba(245,158,11,0.12);">
-                            <i class="bi bi-hourglass-split" style="color:#f59e0b;"></i>
-                        </div>
-                        <h6 class="text-muted text-uppercase fw-bold">Pending Approval</h6>
+                        <div class="stat-emoji">⏳</div>
+                        <h6 class="stat-label">PENDING APPROVAL</h6>
                         <div class="stat-value text-warning">142</div>
-                        <div class="stat-change text-danger mt-2"><i class="bi bi-arrow-up-short"></i> 5% since yesterday</div>
+                        <div class="stat-change" style="color:#f87171;">▲ 5% since yesterday</div>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 col-xl-3">
-                <div class="dashboard-card gradient-border" data-tilt data-tilt-max="8" data-tilt-speed="500" data-tilt-glare data-tilt-max-glare="0.15">
+                <div class="dashboard-card gradient-border h-100" data-tilt data-tilt-max="8" data-tilt-speed="500" data-tilt-glare data-tilt-max-glare="0.15">
                     <div class="skeleton-wrapper">
                         <div class="skeleton mb-2" style="height:14px;width:60%;"></div>
                         <div class="skeleton mb-2" style="height:48px;width:40%;"></div>
                         <div class="skeleton" style="height:12px;width:80%;"></div>
                     </div>
                     <div class="real-content content-hidden">
-                        <div class="card-icon" style="background:rgba(34,197,94,0.12);">
-                            <i class="bi bi-check-circle-fill" style="color:#22c55e;"></i>
-                        </div>
-                        <h6 class="text-muted text-uppercase fw-bold">Resolved</h6>
+                        <div class="stat-emoji">✅</div>
+                        <h6 class="stat-label">RESOLVED</h6>
                         <div class="stat-value text-success">1,105</div>
-                        <div class="stat-change text-success mt-2"><i class="bi bi-arrow-up-short"></i> 18% since last month</div>
+                        <div class="stat-change" style="color:#4ade80;">▲ 18% since last month</div>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6 col-xl-3">
-                <div class="dashboard-card gradient-border" data-tilt data-tilt-max="8" data-tilt-speed="500" data-tilt-glare data-tilt-max-glare="0.15">
+                <div class="dashboard-card gradient-border h-100" data-tilt data-tilt-max="8" data-tilt-speed="500" data-tilt-glare data-tilt-max-glare="0.15">
                     <div class="skeleton-wrapper">
                         <div class="skeleton mb-2" style="height:14px;width:60%;"></div>
                         <div class="skeleton mb-2" style="height:48px;width:40%;"></div>
                         <div class="skeleton" style="height:12px;width:80%;"></div>
                     </div>
                     <div class="real-content content-hidden">
-                        <div class="card-icon" style="background:rgba(239,68,68,0.12);">
-                            <i class="bi bi-exclamation-triangle-fill" style="color:#ef4444;"></i>
-                        </div>
-                        <h6 class="text-muted text-uppercase fw-bold">High Priority</h6>
+                        <div class="stat-emoji">🚨</div>
+                        <h6 class="stat-label">HIGH PRIORITY</h6>
                         <div class="stat-value text-danger">37</div>
-                        <div class="stat-change text-muted mt-2"><i class="bi bi-dot"></i> Requires immediate action</div>
+                        <div class="stat-change" style="color:var(--text-muted);">● Requires immediate action</div>
                     </div>
                 </div>
             </div>
@@ -172,7 +146,7 @@
                         <div class="skeleton" style="height:260px;"></div>
                     </div>
                     <div class="real-content content-hidden">
-                        <h5 class="chart-title mb-4">System-wide Complaint Trends</h5>
+                        <h5 class="chart-title mb-4">📊 System-wide Complaint Trends</h5>
                         <div class="chart-container"><canvas id="trendsChart"></canvas></div>
                     </div>
                 </div>
@@ -184,7 +158,7 @@
                         <div class="skeleton mx-auto" style="height:220px;width:220px;border-radius:50%;"></div>
                     </div>
                     <div class="real-content content-hidden">
-                        <h5 class="chart-title mb-4">Complaints by Category</h5>
+                        <h5 class="chart-title mb-4">🥧 Complaints by Category</h5>
                         <div class="chart-container"><canvas id="categoryChart"></canvas></div>
                     </div>
                 </div>
@@ -195,40 +169,40 @@
         <!-- ===== USER STATS ===== -->
         <div class="row g-4 mb-4">
             <div class="col-sm-4">
-                <div class="dashboard-card gradient-border" data-tilt data-tilt-max="8" data-tilt-speed="500">
+                <div class="dashboard-card gradient-border h-100" data-tilt data-tilt-max="8" data-tilt-speed="500">
                     <div class="skeleton-wrapper">
                         <div class="skeleton mb-2" style="height:14px;width:60%;"></div>
                         <div class="skeleton" style="height:48px;width:40%;"></div>
                     </div>
                     <div class="real-content content-hidden">
-                        <div class="card-icon" style="background:rgba(37,99,235,0.12);"><i class="bi bi-send-fill" style="color:#2563EB;"></i></div>
-                        <h6 class="text-muted text-uppercase fw-bold">My Tickets</h6>
+                        <div class="stat-emoji">📨</div>
+                        <h6 class="stat-label">MY TICKETS</h6>
                         <div class="stat-value">12</div>
                     </div>
                 </div>
             </div>
             <div class="col-sm-4">
-                <div class="dashboard-card gradient-border" data-tilt data-tilt-max="8" data-tilt-speed="500">
+                <div class="dashboard-card gradient-border h-100" data-tilt data-tilt-max="8" data-tilt-speed="500">
                     <div class="skeleton-wrapper">
                         <div class="skeleton mb-2" style="height:14px;width:60%;"></div>
                         <div class="skeleton" style="height:48px;width:40%;"></div>
                     </div>
                     <div class="real-content content-hidden">
-                        <div class="card-icon" style="background:rgba(245,158,11,0.12);"><i class="bi bi-arrow-repeat" style="color:#f59e0b;"></i></div>
-                        <h6 class="text-muted text-uppercase fw-bold">In Progress</h6>
+                        <div class="stat-emoji">🔄</div>
+                        <h6 class="stat-label">IN PROGRESS</h6>
                         <div class="stat-value text-warning">3</div>
                     </div>
                 </div>
             </div>
             <div class="col-sm-4">
-                <div class="dashboard-card gradient-border" data-tilt data-tilt-max="8" data-tilt-speed="500">
+                <div class="dashboard-card gradient-border h-100" data-tilt data-tilt-max="8" data-tilt-speed="500">
                     <div class="skeleton-wrapper">
                         <div class="skeleton mb-2" style="height:14px;width:60%;"></div>
                         <div class="skeleton" style="height:48px;width:40%;"></div>
                     </div>
                     <div class="real-content content-hidden">
-                        <div class="card-icon" style="background:rgba(34,197,94,0.12);"><i class="bi bi-patch-check-fill" style="color:#22c55e;"></i></div>
-                        <h6 class="text-muted text-uppercase fw-bold">Resolved</h6>
+                        <div class="stat-emoji">✅</div>
+                        <h6 class="stat-label">RESOLVED</h6>
                         <div class="stat-value text-success">9</div>
                     </div>
                 </div>
@@ -243,7 +217,7 @@
                         <div class="skeleton" style="height:260px;"></div>
                     </div>
                     <div class="real-content content-hidden">
-                        <h5 class="chart-title mb-4">My Complaint Activity</h5>
+                        <h5 class="chart-title mb-4">📈 My Complaint Activity</h5>
                         <div class="chart-container"><canvas id="userTrendsChart"></canvas></div>
                     </div>
                 </div>
@@ -258,9 +232,9 @@
                     <div class="real-content content-hidden w-100">
                         <div style="font-size:3.5rem;margin-bottom:.75rem;">🎧</div>
                         <h5 class="chart-title mb-2">Need Help?</h5>
-                        <p class="text-muted mb-4" style="font-size:.88rem;">Our support team is ready to assist you.</p>
+                        <p class="mb-4" style="font-size:.88rem;color:var(--text-muted);">Our support team is ready to assist you.</p>
                         <button class="btn btn-primary-custom w-100" data-bs-toggle="modal" data-bs-target="#newComplaintModal">
-                            <i class="bi bi-plus-circle me-2"></i>Create New Ticket
+                            ➕ Create New Ticket
                         </button>
                     </div>
                 </div>
@@ -272,17 +246,17 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content glass-modal">
                     <div class="modal-header border-0 pb-0">
-                        <h5 class="modal-title fw-bold"><i class="bi bi-pencil-square me-2" style="color:var(--accent);"></i>Submit New Complaint</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        <h5 class="modal-title fw-bold">📝 Submit New Complaint</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" style="filter:invert(1);"></button>
                     </div>
                     <div class="modal-body pt-3">
                         <div class="mb-3">
-                            <label class="form-label fw-600" style="color:var(--text-muted);font-size:.85rem;">Subject</label>
+                            <label class="form-label fw-600">Subject</label>
                             <input type="text" class="form-control" placeholder="Briefly describe your issue">
                         </div>
                         <div class="row g-3 mb-3">
                             <div class="col-6">
-                                <label class="form-label fw-600" style="color:var(--text-muted);font-size:.85rem;">Category</label>
+                                <label class="form-label fw-600">Category</label>
                                 <select class="form-select">
                                     <option>Billing</option>
                                     <option>Technical Support</option>
@@ -291,7 +265,7 @@
                                 </select>
                             </div>
                             <div class="col-6">
-                                <label class="form-label fw-600" style="color:var(--text-muted);font-size:.85rem;">Priority</label>
+                                <label class="form-label fw-600">Priority</label>
                                 <select class="form-select">
                                     <option>Low</option>
                                     <option selected>Medium</option>
@@ -300,11 +274,11 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label fw-600" style="color:var(--text-muted);font-size:.85rem;">Description</label>
+                            <label class="form-label fw-600">Description</label>
                             <textarea class="form-control" rows="3" placeholder="Provide more details..."></textarea>
                         </div>
                         <div class="mb-2">
-                            <label class="form-label fw-600" style="color:var(--text-muted);font-size:.85rem;">Attachment (Optional)</label>
+                            <label class="form-label fw-600">Attachment (Optional)</label>
                             <input class="form-control" type="file">
                         </div>
                     </div>
@@ -331,7 +305,7 @@
                     <div class="real-content content-hidden">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <h5 class="fw-bold mb-0" style="color:var(--text-main);">
-                                {% if role == 'admin' %}Recent Global Tickets{% else %}My Recent Tickets{% endif %}
+                                {% if role == 'admin' %}🗂️ Recent Global Tickets{% else %}🗂️ My Recent Tickets{% endif %}
                             </h5>
                             <button class="btn btn-primary-custom btn-sm px-3">View All</button>
                         </div>
@@ -354,37 +328,31 @@
                                         <td><code>#TKT-8891</code></td>
                                         {% if role == 'admin' %}<td>John Doe</td>{% endif %}
                                         <td>Unable to process payment</td>
-                                        <td><span class="badge" style="background:rgba(37,99,235,0.12);color:#2563EB;">Billing</span></td>
+                                        <td><span class="cat-badge billing">Billing</span></td>
                                         <td><span class="badge bg-warning text-dark">Pending</span></td>
                                         <td><span class="badge bg-danger">High</span></td>
-                                        <td style="font-size:.85rem;">Today, 10:45 AM</td>
-                                        <td>
-                                            <button class="btn btn-sm btn-toggle" title="View"><i class="bi bi-eye"></i></button>
-                                        </td>
+                                        <td style="font-size:.85rem;color:var(--text-muted);">Today, 10:45 AM</td>
+                                        <td><button class="btn btn-sm btn-toggle px-2">👁️</button></td>
                                     </tr>
                                     <tr>
                                         <td><code>#TKT-8890</code></td>
                                         {% if role == 'admin' %}<td>Jane Smith</td>{% endif %}
                                         <td>App crashing on startup</td>
-                                        <td><span class="badge" style="background:rgba(8,145,178,0.12);color:#0891b2;">Tech Support</span></td>
+                                        <td><span class="cat-badge tech">Tech Support</span></td>
                                         <td><span class="badge bg-success">Resolved</span></td>
                                         <td><span class="badge bg-info text-dark">Low</span></td>
-                                        <td style="font-size:.85rem;">Yesterday</td>
-                                        <td>
-                                            <button class="btn btn-sm btn-toggle" title="View"><i class="bi bi-eye"></i></button>
-                                        </td>
+                                        <td style="font-size:.85rem;color:var(--text-muted);">Yesterday</td>
+                                        <td><button class="btn btn-sm btn-toggle px-2">👁️</button></td>
                                     </tr>
                                     <tr>
                                         <td><code>#TKT-8885</code></td>
                                         {% if role == 'admin' %}<td>Acme Corp</td>{% endif %}
                                         <td>Requesting dark mode feature</td>
-                                        <td><span class="badge" style="background:rgba(124,58,237,0.12);color:#7c3aed;">Feature</span></td>
+                                        <td><span class="cat-badge feature">Feature</span></td>
                                         <td><span class="badge bg-primary">In Progress</span></td>
                                         <td><span class="badge bg-secondary">Medium</span></td>
-                                        <td style="font-size:.85rem;">2026-07-20</td>
-                                        <td>
-                                            <button class="btn btn-sm btn-toggle" title="View"><i class="bi bi-eye"></i></button>
-                                        </td>
+                                        <td style="font-size:.85rem;color:var(--text-muted);">2026-07-20</td>
+                                        <td><button class="btn btn-sm btn-toggle px-2">👁️</button></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -394,14 +362,12 @@
             </div>
         </div>
 
-        <!-- Toast Notification -->
+        <!-- Toast -->
         <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index:9999;">
-            <div id="successToast" class="toast align-items-center text-white border-0" role="alert" aria-live="assertive"
+            <div id="successToast" class="toast align-items-center text-white border-0" role="alert"
                  style="background:linear-gradient(135deg,#22c55e,#16a34a);border-radius:12px;">
                 <div class="d-flex">
-                    <div class="toast-body fw-600">
-                        <i class="bi bi-check-circle-fill me-2"></i>Complaint submitted successfully!
-                    </div>
+                    <div class="toast-body fw-bold">✅ Complaint submitted successfully!</div>
                     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
                 </div>
             </div>
@@ -412,9 +378,10 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.2/vanilla-tilt.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    // === Skeleton Loader ===
+    // Skeleton loader reveal after 1.8s
     setTimeout(() => {
         document.querySelectorAll('.skeleton-wrapper').forEach(el => el.style.display = 'none');
         document.querySelectorAll('.real-content').forEach(el => {
@@ -423,35 +390,40 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }, 1800);
 
-    // === Chart.js global defaults ===
-    Chart.defaults.color = getComputedStyle(document.documentElement).getPropertyValue('--text-muted') || '#94a3b8';
+    // Dark mode toggle icon update
+    const btn = document.getElementById('darkModeToggle');
+    if (btn) {
+        const cur = document.documentElement.getAttribute('data-theme');
+        btn.textContent = cur === 'dark' ? '☀️' : '🌙';
+        btn.addEventListener('click', () => {
+            const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            btn.textContent = next === 'dark' ? '☀️' : '🌙';
+        });
+    }
+
+    // Chart.js defaults
+    Chart.defaults.color = '#94a3b8';
     Chart.defaults.borderColor = 'rgba(148,163,184,0.15)';
     Chart.defaults.font.family = "'Inter', sans-serif";
 
-    // === Admin Charts ===
+    // Admin Charts
     const trendsEl = document.getElementById('trendsChart');
     if (trendsEl) {
         new Chart(trendsEl, {
             type: 'bar',
             data: {
                 labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul'],
-                datasets: [{
-                    label: 'Received',
-                    data: [65, 59, 80, 81, 56, 55, 40],
-                    backgroundColor: 'rgba(37,99,235,0.75)',
-                    borderRadius: 8
-                }, {
-                    label: 'Resolved',
-                    data: [50, 48, 70, 74, 48, 50, 36],
-                    backgroundColor: 'rgba(34,197,94,0.75)',
-                    borderRadius: 8
-                }]
+                datasets: [
+                    { label: 'Received', data: [65,59,80,81,56,55,40], backgroundColor: 'rgba(37,99,235,0.8)', borderRadius: 8 },
+                    { label: 'Resolved', data: [50,48,70,74,48,50,36], backgroundColor: 'rgba(34,197,94,0.8)', borderRadius: 8 }
+                ]
             },
             options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                animation: { duration: 2000, easing: 'easeOutQuart' },
-                plugins: { legend: { display: true } },
+                responsive: true, maintainAspectRatio: false,
+                animation: { duration: 1500 },
+                plugins: { legend: { position: 'top' } },
                 scales: {
                     x: { grid: { display: false } },
                     y: { beginAtZero: true, grid: { color: 'rgba(148,163,184,0.1)' } }
@@ -460,64 +432,34 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
-    const categoryEl = document.getElementById('categoryChart');
-    if (categoryEl) {
-        new Chart(categoryEl, {
+    const catEl = document.getElementById('categoryChart');
+    if (catEl) {
+        new Chart(catEl, {
             type: 'doughnut',
             data: {
                 labels: ['Billing','Tech Support','Sales','Other'],
-                datasets: [{
-                    data: [300, 500, 100, 100],
-                    backgroundColor: ['#2563EB','#7c3aed','#0891b2','#94a3b8'],
-                    borderWidth: 0,
-                    hoverOffset: 12
-                }]
+                datasets: [{ data: [300,500,100,100], backgroundColor: ['#2563EB','#7c3aed','#0891b2','#94a3b8'], borderWidth: 0, hoverOffset: 12 }]
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                animation: { duration: 2000 },
-                cutout: '65%',
-                plugins: { legend: { position: 'bottom' } }
-            }
+            options: { responsive: true, maintainAspectRatio: false, animation: { duration: 1500 }, cutout: '65%', plugins: { legend: { position: 'bottom' } } }
         });
     }
 
-    // === User Chart ===
+    // User Chart
     const userEl = document.getElementById('userTrendsChart');
     if (userEl) {
         new Chart(userEl, {
             type: 'line',
             data: {
                 labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul'],
-                datasets: [{
-                    label: 'My Complaints',
-                    data: [1,2,0,4,1,3,1],
-                    borderColor: '#7c3aed',
-                    backgroundColor: 'rgba(124,58,237,0.12)',
-                    fill: true,
-                    tension: 0.45,
-                    pointBackgroundColor: '#7c3aed',
-                    pointRadius: 5,
-                    pointHoverRadius: 8
-                }]
+                datasets: [{ label: 'My Complaints', data: [1,2,0,4,1,3,1], borderColor: '#7c3aed', backgroundColor: 'rgba(124,58,237,0.12)', fill: true, tension: 0.45, pointRadius: 5, pointHoverRadius: 8 }]
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                animation: { duration: 2000, easing: 'easeOutQuart' },
-                scales: {
-                    x: { grid: { display: false } },
-                    y: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: 'rgba(148,163,184,0.1)' } }
-                }
-            }
+            options: { responsive: true, maintainAspectRatio: false, animation: { duration: 1500 }, scales: { x: { grid: { display: false } }, y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
         });
     }
 });
 
 function showToast() {
-    const t = document.getElementById('successToast');
-    const toast = new bootstrap.Toast(t, { delay: 4000 });
+    const toast = new bootstrap.Toast(document.getElementById('successToast'), { delay: 4000 });
     toast.show();
 }
 </script>
