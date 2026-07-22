@@ -325,3 +325,7 @@ body {
 .btn-toggle:hover {
     transform: rotate(15deg);
 }
+
+input:-webkit-autofill, input:-webkit-autofill:hover, input:-webkit-autofill:focus, input:-webkit-autofill:active { -webkit-box-shadow: 0 0 0 30px #2e1065 inset !important; -webkit-text-fill-color: white !important; transition: background-color 5000s ease-in-out 0s; }
+.form-floating label { color: #333 !important; }
+.glass-input:focus ~ label, .glass-input:not(:placeholder-shown) ~ label { color: #fff !important; }
