@@ -390,18 +390,6 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }, 1800);
 
-    // Dark mode toggle icon update
-    const btn = document.getElementById('darkModeToggle');
-    if (btn) {
-        const cur = document.documentElement.getAttribute('data-theme');
-        btn.textContent = cur === 'dark' ? '☀️' : '🌙';
-        btn.addEventListener('click', () => {
-            const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-            document.documentElement.setAttribute('data-theme', next);
-            localStorage.setItem('theme', next);
-            btn.textContent = next === 'dark' ? '☀️' : '🌙';
-        });
-    }
 
     // Chart.js defaults
     Chart.defaults.color = '#94a3b8';
