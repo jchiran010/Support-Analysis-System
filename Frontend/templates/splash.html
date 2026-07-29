@@ -2,16 +2,15 @@
 
 {% block content %}
 <div id="splash-screen">
-    <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Support Analysis System Logo" class="splash-logo mb-4">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Support Analysis System Logo" class="splash-logo mb-4">
     <div class="splash-title">Support Analysis System</div>
-    <p class="mb-4 text-light">Loading enterprise modules...</p>
+    <p class="splash-subtitle">Loading enterprise modules...</p>
     <div class="loader">
         <div class="loader-bar"></div>
     </div>
 </div>
 
 <script>
-    // Redirect to login after 5 seconds
     setTimeout(function() {
         window.location.href = "{{ url_for('login') }}";
     }, 5000);

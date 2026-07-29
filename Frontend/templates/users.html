@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrapper">
+
+    <!-- ===== SIDEBAR ===== -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand-icon">S</div>
+            <div>
+                <h5 class="mb-0">Support Analysis</h5>
+                <small style="color:rgba(255,255,255,0.4);font-size:.72rem;">Enterprise Suite</small>
+            </div>
+        </div>
+        <ul>
+            <li class="{% if current_page == 'dashboard' %}active{% endif %}">
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            </li>
+            <li class="{% if current_page == 'complaints' %}active{% endif %}">
+                <a href="{{ url_for('complaints') }}">Complaints</a>
+            </li>
+            {% if role == 'admin' %}
+            <li class="{% if current_page == 'analytics' %}active{% endif %}">
+                <a href="{{ url_for('analytics') }}">Analytics</a>
+            </li>
+            <li class="{% if current_page == 'reports' %}active{% endif %}">
+                <a href="{{ url_for('reports') }}">Reports</a>
+            </li>
+            <li class="{% if current_page == 'users' %}active{% endif %}">
+                <a href="{{ url_for('users') }}">Users</a>
+            </li>
+            {% endif %}
+            <li class="{% if current_page == 'notifications' %}active{% endif %}">
+                <a href="{{ url_for('notifications') }}" style="position:relative;">
+                    Notifications
+                {% if unread_notifications_count > 0 %}<span class="badge bg-danger rounded-pill" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);font-size:0.65rem;">{{ unread_notifications_count }}</span>{% endif %}</a>
+            </li>
+            <li class="{% if current_page == 'settings' %}active{% endif %}">
+                <a href="{{ url_for('settings') }}">Settings</a>
+            </li>
+            <li>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div id="content">
+
+        <!-- Navbar -->
+        <nav class="navbar navbar-custom mb-4 px-3 py-2">
+            <div class="d-flex align-items-center gap-3 w-100">
+                <button id="sidebarCollapse" class="btn btn-toggle" style="font-size:1.3rem;line-height:1;padding:6px 12px;">
+                    ☰
+                </button>
+                <span class="fw-bold welcome-text">
+                    <span class="badge" style="background:linear-gradient(135deg,#2563eb,#7c3aed);font-size:.75rem;padding:4px 10px;border-radius:20px;margin-right:8px;">ADMIN</span>
+                    {{ name }}
+                </span>
+                <div class="ms-auto">
+                    <button class="btn btn-toggle" id="darkModeToggle" title="Toggle Theme" style="font-size:1.2rem;line-height:1;padding:6px 12px;">
+                        🌙
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'success' if category == 'success' else 'danger' }} alert-dismissible fade show mb-4" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold mb-0" style="color:var(--text-main);">
+                User Management
+            </h3>
+            <span class="badge bg-secondary px-3 py-2 rounded-pill" style="font-size: 0.9rem;">
+                Total Registered: {{ users|length }}
+            </span>
+        </div>
+
+        <div class="dashboard-card">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Username</th>
+                            <th>Email Address</th>
+                            <th>Access Role</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for u in users %}
+                        <tr>
+                            <td class="fw-semibold text-muted">#USR-{{ u.id }}</td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="d-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-circle" style="width:32px; height:32px; font-weight:600;">
+                                        {{ u.username[0]|upper }}
+                                    </div>
+                                    <span class="fw-bold" style="color: var(--text-main);">{{ u.username }}</span>
+                                </div>
+                            </td>
+                            <td>{{ u.email }}</td>
+                            <td>
+                                {% if u.role == 'admin' %}
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill px-3 py-1">Administrator</span>
+                                {% else %}
+                                    <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-1">User</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-end">
+                                <div class="d-inline-flex gap-2">
+                                    {% if u.id == session['user_id'] %}
+                                        <button class="btn btn-sm btn-outline-secondary" disabled title="Cannot change your own role">
+                                            <i class="bi bi-shield-slash"></i> Change Role
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-secondary" disabled title="Cannot delete your own account">
+                                            <i class="bi bi-trash"></i> Delete
+                                        </button>
+                                    {% else %}
+                                        <form action="{{ url_for('change_role', user_id=u.id) }}" method="POST" class="d-inline">
+                                            <button type="submit" class="btn btn-sm btn-outline-primary">
+                                                <i class="bi bi-arrow-left-right"></i> Toggle Role
+                                            </button>
+                                        </form>
+                                        <form action="{{ url_for('delete_user', user_id=u.id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you absolutely sure you want to delete user: {{ u.username }}? All of their submitted complaints and notifications will be deleted permanently.');">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                <i class="bi bi-trash"></i> Delete
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -13,32 +13,32 @@
         </div>
         <ul>
             <li class="{% if current_page == 'dashboard' %}active{% endif %}">
-                <a href="{{ url_for('dashboard') }}">📊 Dashboard</a>
+                <a href="{{ url_for('dashboard') }}">Dashboard</a>
             </li>
             <li class="{% if current_page == 'complaints' %}active{% endif %}">
-                <a href="{{ url_for('page', page_name='complaints') }}">💬 Complaints</a>
+                <a href="{{ url_for('complaints') }}">Complaints</a>
             </li>
             {% if role == 'admin' %}
             <li class="{% if current_page == 'analytics' %}active{% endif %}">
-                <a href="{{ url_for('page', page_name='analytics') }}">📈 Analytics</a>
+                <a href="{{ url_for('page', page_name='analytics') }}">Analytics</a>
             </li>
             <li class="{% if current_page == 'reports' %}active{% endif %}">
-                <a href="{{ url_for('page', page_name='reports') }}">📄 Reports</a>
+                <a href="{{ url_for('page', page_name='reports') }}">Reports</a>
             </li>
             <li class="{% if current_page == 'users' %}active{% endif %}">
-                <a href="{{ url_for('page', page_name='users') }}">👥 Users</a>
+                <a href="{{ url_for('page', page_name='users') }}">Users</a>
             </li>
             {% endif %}
             <li class="{% if current_page == 'notifications' %}active{% endif %}">
                 <a href="{{ url_for('page', page_name='notifications') }}" style="position:relative;">
-                    🔔 Notifications <span class="notif-badge"></span>
+                    Notifications <span class="notif-badge"></span>
                 </a>
             </li>
             <li class="{% if current_page == 'settings' %}active{% endif %}">
-                <a href="{{ url_for('page', page_name='settings') }}">⚙️ Settings</a>
+                <a href="{{ url_for('page', page_name='settings') }}">Settings</a>
             </li>
             <li>
-                <a href="{{ url_for('logout') }}">🚪 Logout</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
             </li>
         </ul>
     </nav>
@@ -72,16 +72,16 @@
             {{ page_name }} Module
         </h3>
 
-        <div class="dashboard-card gradient-border">
+        <div class="dashboard-card border rounded shadow-sm">
             <div class="d-flex align-items-center gap-3 mb-3">
-                <div style="font-size: 2.5rem;">🛠️</div>
+                <div style="font-size: 2.5rem;"></div>
                 <div>
                     <h5 class="mb-0 fw-bold" style="color:var(--text-main);">{{ page_name }} Module under construction</h5>
                     <p class="mb-0" style="color:var(--text-muted);font-size:.9rem;">We are setting up the dynamic data pipeline for this view.</p>
                 </div>
             </div>
             <div class="alert" style="background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.2);border-radius:10px;color:var(--text-main);">
-                ℹ️ The full features of the <strong>{{ page_name }}</strong> module are active on our backend. Live synchronization is coming soon.
+                The full features of the <strong>{{ page_name }}</strong> module are active on our backend. Live synchronization is coming soon.
             </div>
         </div>
     </div>
