@@ -13,9 +13,9 @@
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div class="alert alert-{{ category }} alert-dismissible fade show rounded-3 mb-3" role="alert">
+                    <div class="alert alert-{{ category }} bg-{{ category }} text-white border-0 alert-dismissible fade show rounded-3 mb-3 fw-bold shadow" role="alert">
                         <i class="bi bi-exclamation-circle me-2"></i>{{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"></button>
                     </div>
                 {% endfor %}
             {% endif %}

@@ -172,15 +172,7 @@ body {
     color: rgba(255, 255, 255, 0.7);
 }
 
-.login-card .alert {
-    background-color: rgba(255, 255, 255, 0.9) !important;
-    color: #0f172a !important;
-    border: 1px solid rgba(0, 0, 0, 0.1) !important;
-}
 
-.login-card .alert .btn-close {
-    filter: none !important;
-}
 
 /* Inputs */
 .glass-input {
