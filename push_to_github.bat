@@ -3,14 +3,26 @@ echo ===================================================
 echo     Pushing code to GitHub for Support Analysis    
 echo ===================================================
 echo.
-echo Make sure you have created an empty repository on GitHub named "Support-Analysis-System"
-echo and you have Git installed.
-echo.
-pause
+echo Checking Git remote configuration...
+git remote | findstr "^origin$" >nul
+if %errorlevel% neq 0 (
+    echo Adding origin remote...
+    git remote add origin https://github.com/jchiran010/Support-Analysis-System.git
+) else (
+    echo Setting origin remote URL...
+    git remote set-url origin https://github.com/jchiran010/Support-Analysis-System.git
+)
 
+echo.
+echo Staging all changes...
 git add .
-git commit -m "Enhance UI with animations, glassmorphism, and logos"
-git remote add origin https://github.com/jchiran010/Support-Analysis-System.git
+
+echo.
+echo Committing changes...
+git commit -m "Feature: modularize backend structure, add models, routes, services, templates, and install VS Code extensions"
+
+echo.
+echo Pushing to GitHub main branch...
 git branch -M main
 git push -u origin main
 
