@@ -13,32 +13,32 @@
         </div>
         <ul>
             <li class="{% if current_page == 'dashboard' %}active{% endif %}">
-                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('user.dashboard') }}">Dashboard</a>
             </li>
             <li class="{% if current_page == 'complaints' %}active{% endif %}">
-                <a href="{{ url_for('complaints') }}">Complaints</a>
+                <a href="{{ url_for('complaint.complaints') }}">Complaints</a>
             </li>
             {% if role == 'admin' %}
             <li class="{% if current_page == 'analytics' %}active{% endif %}">
-                <a href="{{ url_for('analytics') }}">Analytics</a>
+                <a href="{{ url_for('report.analytics') }}">Analytics</a>
             </li>
             <li class="{% if current_page == 'reports' %}active{% endif %}">
-                <a href="{{ url_for('reports') }}">Reports</a>
+                <a href="{{ url_for('report.reports') }}">Reports</a>
             </li>
             <li class="{% if current_page == 'users' %}active{% endif %}">
-                <a href="{{ url_for('users') }}">Users</a>
+                <a href="{{ url_for('admin.users') }}">Users</a>
             </li>
             {% endif %}
             <li class="{% if current_page == 'notifications' %}active{% endif %}">
-                <a href="{{ url_for('notifications') }}" style="position:relative;">
+                <a href="{{ url_for('notification.notifications') }}" style="position:relative;">
                     Notifications
                 {% if unread_notifications_count > 0 %}<span class="badge bg-danger rounded-pill" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);font-size:0.65rem;">{{ unread_notifications_count }}</span>{% endif %}</a>
             </li>
             <li class="{% if current_page == 'settings' %}active{% endif %}">
-                <a href="{{ url_for('settings') }}">Settings</a>
+                <a href="{{ url_for('user.settings') }}">Settings</a>
             </li>
             <li>
-                <a href="{{ url_for('logout') }}">Logout</a>
+                <a href="{{ url_for('auth.logout') }}">Logout</a>
             </li>
         </ul>
     </nav>
@@ -101,7 +101,7 @@
                         </div>
                     </div>
 
-                    <form action="{{ url_for('settings') }}" method="POST">
+                    <form action="{{ url_for('user.settings') }}" method="POST">
                         <div class="mb-3">
                             <label for="username_disabled" class="form-label text-muted" style="font-size: 0.85rem; font-weight: 500;">Username</label>
                             <input type="text" id="username_disabled" class="form-control border-color bg-light text-muted" value="{{ user.username }}" disabled>
@@ -127,7 +127,7 @@
                         Change Password
                     </h5>
                     
-                    <form action="{{ url_for('settings') }}" method="POST" onsubmit="return validatePasswordChange();">
+                    <form action="{{ url_for('user.settings') }}" method="POST" onsubmit="return validatePasswordChange();">
                         <div class="mb-3">
                             <label for="current_password" class="form-label text-muted" style="font-size: 0.85rem; font-weight: 500;">Current Password</label>
                             <input type="password" id="current_password" name="current_password" class="form-control border-color" style="background-color: var(--input-bg); color: var(--text-main);" placeholder="Enter current password" required>

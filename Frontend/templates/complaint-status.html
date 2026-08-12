@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrapper">
+
+    <!-- ===== SIDEBAR ===== -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand-icon">S</div>
+            <div>
+                <h5 class="mb-0">Support Analysis</h5>
+                <small style="color:rgba(255,255,255,0.4);font-size:.72rem;">Enterprise Suite</small>
+            </div>
+        </div>
+        <ul>
+            <li>
+                <a href="{{ url_for('user.dashboard') }}">Dashboard</a>
+            </li>
+            <li>
+                <a href="{{ url_for('complaint.complaints') }}">Complaints</a>
+            </li>
+            <li>
+                <a href="{{ url_for('notification.notifications') }}" style="position:relative;">
+                    Notifications <span class="notif-badge"></span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('user.settings') }}">Settings</a>
+            </li>
+            <li>
+                <a href="{{ url_for('auth.logout') }}">Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div id="content">
+        <!-- Navbar -->
+        <nav class="navbar navbar-custom mb-4 px-3 py-2">
+            <div class="d-flex align-items-center gap-3 w-100">
+                <button id="sidebarCollapse" class="btn btn-toggle" style="font-size:1.3rem;line-height:1;padding:6px 12px;">
+                    ☰
+                </button>
+                <span class="fw-bold welcome-text">
+                    <span class="badge" style="background:linear-gradient(135deg,#0891b2,#7c3aed);font-size:.75rem;padding:4px 10px;border-radius:20px;margin-right:8px;">USER</span>
+                    {{ name }}
+                </span>
+                <div class="ms-auto">
+                    <button class="btn btn-toggle" id="darkModeToggle" title="Toggle Theme" style="font-size:1.2rem;line-height:1;padding:6px 12px;">
+                        🌙
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <h3 class="fw-bold mb-4" style="color:var(--text-main);">
+            Complaint Status Lookup
+        </h3>
+
+        <div class="dashboard-card border rounded shadow-sm">
+            <p>Look up the exact status of your complaint by Ticket ID.</p>
+            <form action="{{ url_for('complaint.complaints') }}" method="GET" class="d-flex gap-2 mb-4" style="max-width: 400px;">
+                <input type="text" name="ticket_id" class="form-control" placeholder="e.g. TKT-12" required>
+                <button type="submit" class="btn btn-primary">Lookup</button>
+            </form>
+            
+            <div class="alert" style="background:rgba(8,145,178,0.1);border:1px solid rgba(8,145,178,0.2);border-radius:10px;color:var(--text-main);">
+                Alternatively, you can view all your tickets in the <a href="{{ url_for('complaint.complaints') }}" class="fw-bold text-decoration-none">Complaints</a> tab.
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

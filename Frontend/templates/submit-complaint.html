@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrapper">
+
+    <!-- ===== SIDEBAR ===== -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand-icon">S</div>
+            <div>
+                <h5 class="mb-0">Support Analysis</h5>
+                <small style="color:rgba(255,255,255,0.4);font-size:.72rem;">Enterprise Suite</small>
+            </div>
+        </div>
+        <ul>
+            <li>
+                <a href="{{ url_for('user.dashboard') }}">Dashboard</a>
+            </li>
+            <li>
+                <a href="{{ url_for('complaint.complaints') }}">Complaints</a>
+            </li>
+            <li>
+                <a href="{{ url_for('notification.notifications') }}" style="position:relative;">
+                    Notifications <span class="notif-badge"></span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('user.settings') }}">Settings</a>
+            </li>
+            <li>
+                <a href="{{ url_for('auth.logout') }}">Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div id="content">
+        <!-- Navbar -->
+        <nav class="navbar navbar-custom mb-4 px-3 py-2">
+            <div class="d-flex align-items-center gap-3 w-100">
+                <button id="sidebarCollapse" class="btn btn-toggle" style="font-size:1.3rem;line-height:1;padding:6px 12px;">
+                    ☰
+                </button>
+                <span class="fw-bold welcome-text">
+                    <span class="badge" style="background:linear-gradient(135deg,#0891b2,#7c3aed);font-size:.75rem;padding:4px 10px;border-radius:20px;margin-right:8px;">USER</span>
+                    {{ name }}
+                </span>
+                <div class="ms-auto">
+                    <button class="btn btn-toggle" id="darkModeToggle" title="Toggle Theme" style="font-size:1.2rem;line-height:1;padding:6px 12px;">
+                        🌙
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <h3 class="fw-bold mb-4" style="color:var(--text-main);">
+            Submit a New Complaint
+        </h3>
+
+        <div class="dashboard-card border rounded shadow-sm">
+            <form action="{{ url_for('complaint.add_complaint') }}" method="POST">
+                <div class="mb-3">
+                    <label class="form-label fw-600">Subject</label>
+                    <input type="text" name="title" class="form-control" placeholder="Briefly describe your issue" required>
+                </div>
+                <div class="row g-3 mb-3">
+                    <div class="col-6">
+                        <label class="form-label fw-600">Category</label>
+                        <select class="form-select" name="category" required>
+                            <option value="Billing">Billing</option>
+                            <option value="Technical Support">Technical Support</option>
+                            <option value="Feature Request">Feature Request</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <label class="form-label fw-600">Priority</label>
+                        <select class="form-select" name="priority" required>
+                            <option value="Low">Low</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label fw-600">Description</label>
+                    <textarea name="description" class="form-control" rows="5" placeholder="Provide more details..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary px-4">Submit Ticket</button>
+                <a href="{{ url_for('user.dashboard') }}" class="btn btn-secondary px-4 ms-2">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

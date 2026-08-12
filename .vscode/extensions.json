@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-toolsai.jupyter",
+        "cweijan.vscode-sqlite-mac",
+        "ms-azuretools.vscode-docker",
+        "esbenp.prettier-vscode"
+    ]
+}

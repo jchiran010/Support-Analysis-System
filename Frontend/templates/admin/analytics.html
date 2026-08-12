@@ -1,0 +1,296 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrapper">
+
+    <!-- ===== SIDEBAR ===== -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand-icon">S</div>
+            <div>
+                <h5 class="mb-0">Support Analysis</h5>
+                <small style="color:rgba(255,255,255,0.4);font-size:.72rem;">Enterprise Suite</small>
+            </div>
+        </div>
+        <ul>
+            <li class="{% if current_page == 'dashboard' %}active{% endif %}">
+                <a href="{{ url_for('user.dashboard') }}">Dashboard</a>
+            </li>
+            <li class="{% if current_page == 'complaints' %}active{% endif %}">
+                <a href="{{ url_for('complaint.complaints') }}">Complaints</a>
+            </li>
+            {% if role == 'admin' %}
+            <li class="{% if current_page == 'analytics' %}active{% endif %}">
+                <a href="{{ url_for('report.analytics') }}">Analytics</a>
+            </li>
+            <li class="{% if current_page == 'reports' %}active{% endif %}">
+                <a href="{{ url_for('report.reports') }}">Reports</a>
+            </li>
+            <li class="{% if current_page == 'users' %}active{% endif %}">
+                <a href="{{ url_for('admin.users') }}">Users</a>
+            </li>
+            {% endif %}
+            <li class="{% if current_page == 'notifications' %}active{% endif %}">
+                <a href="{{ url_for('notification.notifications') }}" style="position:relative;">
+                    Notifications
+                {% if unread_notifications_count > 0 %}<span class="badge bg-danger rounded-pill" style="position:absolute;top:50%;right:10px;transform:translateY(-50%);font-size:0.65rem;">{{ unread_notifications_count }}</span>{% endif %}</a>
+            </li>
+            <li class="{% if current_page == 'settings' %}active{% endif %}">
+                <a href="{{ url_for('user.settings') }}">Settings</a>
+            </li>
+            <li>
+                <a href="{{ url_for('auth.logout') }}">Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- ===== MAIN CONTENT ===== -->
+    <div id="content">
+
+        <!-- Navbar -->
+        <nav class="navbar navbar-custom mb-4 px-3 py-2">
+            <div class="d-flex align-items-center gap-3 w-100">
+                <button id="sidebarCollapse" class="btn btn-toggle" style="font-size:1.3rem;line-height:1;padding:6px 12px;">
+                    ☰
+                </button>
+                <span class="fw-bold welcome-text">
+                    {% if role == 'admin' %}
+                        <span class="badge" style="background:linear-gradient(135deg,#2563eb,#7c3aed);font-size:.75rem;padding:4px 10px;border-radius:20px;margin-right:8px;">ADMIN</span>
+                    {% else %}
+                        <span class="badge" style="background:linear-gradient(135deg,#0891b2,#7c3aed);font-size:.75rem;padding:4px 10px;border-radius:20px;margin-right:8px;">USER</span>
+                    {% endif %}
+                    {{ name }}
+                </span>
+                <div class="ms-auto">
+                    <button class="btn btn-toggle" id="darkModeToggle" title="Toggle Theme" style="font-size:1.2rem;line-height:1;padding:6px 12px;">
+                        🌙
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <h3 class="fw-bold mb-4" style="color:var(--text-main);">
+            Analytics Dashboard
+        </h3>
+
+        <!-- Charts Grid -->
+        <div class="row g-4 mb-4">
+            <!-- Line Chart: Trends -->
+            <div class="col-lg-8">
+                <div class="dashboard-card border rounded shadow-sm h-100">
+                    <div class="skeleton-wrapper">
+                        <div class="skeleton mb-4" style="height:22px;width:55%;"></div>
+                        <div class="skeleton" style="height:300px;"></div>
+                    </div>
+                    <div class="real-content content-hidden">
+                        <h5 class="chart-title mb-4" style="font-weight: 700; color: var(--text-main);">Complaint Volume Trend</h5>
+                        <div class="chart-container" style="height: 300px; position: relative;">
+                            <canvas id="trendAnalyticsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doughnut Chart: Categories -->
+            <div class="col-lg-4">
+                <div class="dashboard-card border rounded shadow-sm h-100">
+                    <div class="skeleton-wrapper">
+                        <div class="skeleton mb-4" style="height:22px;width:65%;"></div>
+                        <div class="skeleton" style="height:300px;"></div>
+                    </div>
+                    <div class="real-content content-hidden">
+                        <h5 class="chart-title mb-4" style="font-weight: 700; color: var(--text-main);">Tickets by Category</h5>
+                        <div class="chart-container" style="height: 300px; position: relative;">
+                            <canvas id="categoryAnalyticsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <!-- Bar Chart: Status Breakdown -->
+            <div class="col-lg-6">
+                <div class="dashboard-card border rounded shadow-sm h-100">
+                    <div class="skeleton-wrapper">
+                        <div class="skeleton mb-4" style="height:22px;width:50%;"></div>
+                        <div class="skeleton" style="height:280px;"></div>
+                    </div>
+                    <div class="real-content content-hidden">
+                        <h5 class="chart-title mb-4" style="font-weight: 700; color: var(--text-main);">Tickets by Status</h5>
+                        <div class="chart-container" style="height: 280px; position: relative;">
+                            <canvas id="statusAnalyticsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary metrics -->
+            <div class="col-lg-6">
+                <div class="dashboard-card border rounded shadow-sm h-100 d-flex flex-column justify-content-between">
+                    <div class="skeleton-wrapper">
+                        <div class="skeleton mb-4" style="height:22px;width:40%;"></div>
+                        <div class="skeleton mb-3" style="height:60px;"></div>
+                        <div class="skeleton mb-3" style="height:60px;"></div>
+                        <div class="skeleton" style="height:60px;"></div>
+                    </div>
+                    <div class="real-content content-hidden w-100">
+                        <h5 class="chart-title mb-4" style="font-weight: 700; color: var(--text-main);">Key Performance Indicators</h5>
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <div class="p-3 border rounded border-color text-center bg-light-subtle">
+                                    <h6 class="text-muted mb-1" style="font-size: 0.8rem;">TOTAL TICKETS</h6>
+                                    <h3 class="fw-bold mb-0 text-main">{{ status_counts|sum }}</h3>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3 border rounded border-color text-center bg-light-subtle">
+                                    <h6 class="text-muted mb-1" style="font-size: 0.8rem;">RESOLVED TICKETS</h6>
+                                    <h3 class="fw-bold mb-0 text-success">
+                                        {% if 'Resolved' in statuses %}
+                                            {{ status_counts[statuses.index('Resolved')] }}
+                                        {% else %}
+                                            0
+                                        {% endif %}
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3 border rounded border-color text-center bg-light-subtle">
+                                    <h6 class="text-muted mb-1" style="font-size: 0.8rem;">PENDING TICKETS</h6>
+                                    <h3 class="fw-bold mb-0 text-warning">
+                                        {% if 'Pending' in statuses %}
+                                            {{ status_counts[statuses.index('Pending')] }}
+                                        {% else %}
+                                            0
+                                        {% endif %}
+                                    </h3>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3 border rounded border-color text-center bg-light-subtle">
+                                    <h6 class="text-muted mb-1" style="font-size: 0.8rem;">IN PROGRESS</h6>
+                                    <h3 class="fw-bold mb-0 text-primary">
+                                        {% if 'In Progress' in statuses %}
+                                            {{ status_counts[statuses.index('In Progress')] }}
+                                        {% else %}
+                                            0
+                                        {% endif %}
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Skeleton loader reveal
+    setTimeout(() => {
+        document.querySelectorAll('.skeleton-wrapper').forEach(el => el.style.display = 'none');
+        document.querySelectorAll('.real-content').forEach(el => {
+            el.classList.remove('content-hidden');
+            el.style.animation = 'fadeInUp 0.5s ease forwards';
+        });
+    }, 1200);
+
+    // Chart.js defaults configuration
+    Chart.defaults.color = '#94a3b8';
+    Chart.defaults.borderColor = 'rgba(148,163,184,0.15)';
+    Chart.defaults.font.family = "'Inter', sans-serif";
+
+    // 1. Trend Line Chart
+    const trendCtx = document.getElementById('trendAnalyticsChart');
+    if (trendCtx) {
+        new Chart(trendCtx, {
+            type: 'line',
+            data: {
+                labels: JSON.parse('{{ trend_labels|tojson|safe|replace("\'", "\\\'") }}'),
+                datasets: [{
+                    label: 'Complaint Submissions',
+                    data: JSON.parse('{{ trend_values|tojson|safe|replace("\'", "\\\'") }}'),
+                    borderColor: '#3B82F6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 6,
+                    pointHoverRadius: 9,
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { beginAtZero: true, ticks: { stepSize: 1 } }
+                }
+            }
+        });
+    }
+
+    // 2. Category Doughnut Chart
+    const categoryCtx = document.getElementById('categoryAnalyticsChart');
+    if (categoryCtx) {
+        new Chart(categoryCtx, {
+            type: 'doughnut',
+            data: {
+                labels: JSON.parse('{{ categories|tojson|safe|replace("\'", "\\\'") }}'),
+                datasets: [{
+                    data: JSON.parse('{{ cat_counts|tojson|safe|replace("\'", "\\\'") }}'),
+                    backgroundColor: ['#2563EB', '#10B981', '#F59E0B', '#6B7280'],
+                    borderWidth: 0,
+                    hoverOffset: 12
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: '70%',
+                plugins: {
+                    legend: { position: 'bottom', labels: { padding: 15 } }
+                }
+            }
+        });
+    }
+
+    // 3. Status Bar Chart
+    const statusCtx = document.getElementById('statusAnalyticsChart');
+    if (statusCtx) {
+        new Chart(statusCtx, {
+            type: 'bar',
+            data: {
+                labels: JSON.parse('{{ statuses|tojson|safe|replace("\'", "\\\'") }}'),
+                datasets: [{
+                    label: 'Tickets count',
+                    data: JSON.parse('{{ status_counts|tojson|safe|replace("\'", "\\\'") }}'),
+                    backgroundColor: ['#F59E0B', '#3B82F6', '#10B981'],
+                    borderRadius: 8,
+                    maxBarThickness: 45
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: { grid: { display: false } },
+                    y: { beginAtZero: true, ticks: { stepSize: 1 } }
+                }
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

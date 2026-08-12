@@ -13,32 +13,32 @@
         </div>
         <ul>
             <li class="{% if current_page == 'dashboard' %}active{% endif %}">
-                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('user.dashboard') }}">Dashboard</a>
             </li>
             <li class="{% if current_page == 'complaints' %}active{% endif %}">
-                <a href="{{ url_for('complaints') }}">Complaints</a>
+                <a href="{{ url_for('complaint.complaints') }}">Complaints</a>
             </li>
             {% if role == 'admin' %}
             <li class="{% if current_page == 'analytics' %}active{% endif %}">
-                <a href="{{ url_for('page', page_name='analytics') }}">Analytics</a>
+                <a href="{{ url_for('user.page', page_name='analytics') }}">Analytics</a>
             </li>
             <li class="{% if current_page == 'reports' %}active{% endif %}">
-                <a href="{{ url_for('page', page_name='reports') }}">Reports</a>
+                <a href="{{ url_for('user.page', page_name='reports') }}">Reports</a>
             </li>
             <li class="{% if current_page == 'users' %}active{% endif %}">
-                <a href="{{ url_for('page', page_name='users') }}">Users</a>
+                <a href="{{ url_for('user.page', page_name='users') }}">Users</a>
             </li>
             {% endif %}
             <li class="{% if current_page == 'notifications' %}active{% endif %}">
-                <a href="{{ url_for('page', page_name='notifications') }}" style="position:relative;">
+                <a href="{{ url_for('user.page', page_name='notifications') }}" style="position:relative;">
                     Notifications <span class="notif-badge"></span>
                 </a>
             </li>
             <li class="{% if current_page == 'settings' %}active{% endif %}">
-                <a href="{{ url_for('page', page_name='settings') }}">Settings</a>
+                <a href="{{ url_for('user.page', page_name='settings') }}">Settings</a>
             </li>
             <li>
-                <a href="{{ url_for('logout') }}">Logout</a>
+                <a href="{{ url_for('auth.logout') }}">Logout</a>
             </li>
         </ul>
     </nav>
