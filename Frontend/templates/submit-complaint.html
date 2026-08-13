@@ -12,22 +12,37 @@
             </div>
         </div>
         <ul>
-            <li>
-                <a href="{{ url_for('user.dashboard') }}">Dashboard</a>
+            <li class="{% if current_page == 'dashboard' %}active{% endif %}">
+                <a href="{{ url_for('user.dashboard') }}"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+            </li>
+            <li class="{% if current_page == 'complaints' %}active{% endif %}">
+                <a href="{{ url_for('complaint.complaints') }}"><i class="bi bi-ticket-detailed me-2"></i> Complaints</a>
+            </li>
+            {% if role == 'admin' %}
+            <li class="{% if current_page == 'analytics' %}active{% endif %}">
+                <a href="{{ url_for('report.analytics') }}"><i class="bi bi-bar-chart-line me-2"></i> Analytics</a>
+            </li>
+            <li class="{% if current_page == 'reports' %}active{% endif %}">
+                <a href="{{ url_for('report.reports') }}"><i class="bi bi-file-earmark-text me-2"></i> Reports</a>
+            </li>
+            <li class="{% if current_page == 'users' %}active{% endif %}">
+                <a href="{{ url_for('admin.users') }}"><i class="bi bi-people me-2"></i> Users</a>
+            </li>
+            {% endif %}
+            <li class="{% if current_page == 'feedback' %}active{% endif %}">
+                <a href="{{ url_for('feedback.feedback_page') }}"><i class="bi bi-star me-2"></i> Feedback</a>
+            </li>
+            <li class="{% if current_page == 'faq' %}active{% endif %}">
+                <a href="{{ url_for('complaint.faq') }}"><i class="bi bi-question-circle me-2"></i> Help Center</a>
+            </li>
+            <li class="{% if current_page == 'notifications' %}active{% endif %}">
+                <a href="{{ url_for('notification.notifications') }}"><i class="bi bi-bell me-2"></i> Notifications {% if unread_notifications_count > 0 %}<span class="badge bg-danger rounded-pill ms-auto">{{ unread_notifications_count }}</span>{% endif %}</a>
+            </li>
+            <li class="{% if current_page == 'settings' %}active{% endif %}">
+                <a href="{{ url_for('user.settings') }}"><i class="bi bi-gear me-2"></i> Settings</a>
             </li>
             <li>
-                <a href="{{ url_for('complaint.complaints') }}">Complaints</a>
-            </li>
-            <li>
-                <a href="{{ url_for('notification.notifications') }}" style="position:relative;">
-                    Notifications <span class="notif-badge"></span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ url_for('user.settings') }}">Settings</a>
-            </li>
-            <li>
-                <a href="{{ url_for('auth.logout') }}">Logout</a>
+                <a href="{{ url_for('auth.logout') }}"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
             </li>
         </ul>
     </nav>

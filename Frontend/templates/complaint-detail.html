@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand-icon">S</div>
+            <div>
+                <h5 class="mb-0">Support Analysis</h5>
+                <small style="color:rgba(255,255,255,0.4);font-size:.72rem;">Enterprise Suite</small>
+            </div>
+        </div>
+        <ul>
+            <li class="{% if current_page == 'dashboard' %}active{% endif %}">
+                <a href="{{ url_for('user.dashboard') }}"><i class="bi bi-speedometer2"></i> Dashboard</a>
+            </li>
+            <li class="{% if current_page == 'complaints' %}active{% endif %}">
+                <a href="{{ url_for('complaint.complaints') }}"><i class="bi bi-ticket-detailed"></i> Complaints</a>
+            </li>
+            {% if role == 'admin' %}
+            <li class="{% if current_page == 'analytics' %}active{% endif %}">
+                <a href="{{ url_for('report.analytics') }}"><i class="bi bi-bar-chart-line"></i> Analytics</a>
+            </li>
+            <li class="{% if current_page == 'reports' %}active{% endif %}">
+                <a href="{{ url_for('report.reports') }}"><i class="bi bi-file-earmark-text"></i> Reports</a>
+            </li>
+            <li class="{% if current_page == 'users' %}active{% endif %}">
+                <a href="{{ url_for('admin.users') }}"><i class="bi bi-people"></i> Users</a>
+            </li>
+            {% endif %}
+            <li class="{% if current_page == 'feedback' %}active{% endif %}">
+                <a href="{{ url_for('feedback.feedback_page') }}"><i class="bi bi-star"></i> Feedback</a>
+            </li>
+            <li class="{% if current_page == 'faq' %}active{% endif %}">
+                <a href="{{ url_for('complaint.faq') }}"><i class="bi bi-question-circle"></i> Help Center</a>
+            </li>
+            <li class="{% if current_page == 'notifications' %}active{% endif %}">
+                <a href="{{ url_for('notification.notifications') }}"><i class="bi bi-bell"></i> Notifications {% if unread_notifications_count > 0 %}<span class="badge bg-danger rounded-pill ms-auto">{{ unread_notifications_count }}</span>{% endif %}</a>
+            </li>
+            <li class="{% if current_page == 'settings' %}active{% endif %}">
+                <a href="{{ url_for('user.settings') }}"><i class="bi bi-gear"></i> Settings</a>
+            </li>
+            <li>
+                <a href="{{ url_for('auth.logout') }}"><i class="bi bi-box-arrow-right"></i> Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div id="content">
+        <!-- Navbar -->
+        <nav class="navbar navbar-custom mb-4 px-3 py-2">
+            <div class="d-flex align-items-center gap-3 w-100">
+                <button id="sidebarCollapse" class="btn btn-toggle" style="font-size:1.3rem;line-height:1;padding:6px 12px;">☰</button>
+                <div class="position-relative flex-grow-1 max-w-md">
+                    <input type="text" id="globalSearchInput" class="form-control form-control-sm rounded-pill px-3" placeholder="Search tickets (Ctrl+K)...">
+                    <div id="globalSearchResults" class="dropdown-menu w-100 shadow mt-1"></div>
+                </div>
+                <div class="ms-auto d-flex align-items-center gap-2">
+                    <button class="btn btn-toggle" id="darkModeToggle" title="Toggle Theme">🌙</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Breadcrumb -->
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('user.dashboard') }}" class="text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('complaint.complaints') }}" class="text-decoration-none">Tickets</a></li>
+                <li class="breadcrumb-item active" aria-current="page">#TKT-{{ complaint.id }}</li>
+            </ol>
+        </nav>
+
+        <!-- Header -->
+        <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-2">
+            <div>
+                <h3 class="fw-bold mb-1">#TKT-{{ complaint.id }}: {{ complaint.title }}</h3>
+                <div class="d-flex align-items-center gap-2 text-muted small">
+                    <span>Submitted by <strong>{{ complaint.author.username }}</strong> on {{ complaint.created_at.strftime('%b %d, %Y %H:%M') }}</span>
+                    <span>•</span>
+                    <span class="badge bg-secondary">{{ complaint.category }}</span>
+                </div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge rounded-pill {% if complaint.priority == 'High' %}bg-danger{% elif complaint.priority == 'Medium' %}bg-warning text-dark{% else %}bg-success{% endif %} px-3 py-2">
+                    Priority: {{ complaint.priority }}
+                </span>
+                <span class="badge rounded-pill {% if complaint.status == 'Resolved' %}bg-success{% elif complaint.status == 'In Progress' %}bg-info text-dark{% else %}bg-warning text-dark{% endif %} px-3 py-2">
+                    Status: {{ complaint.status }}
+                </span>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <!-- Description Card -->
+                <div class="dashboard-card border rounded shadow-sm mb-4">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-card-text me-2 text-primary"></i> Description</h5>
+                    <p class="mb-0" style="line-height:1.7; white-space: pre-line;">{{ complaint.description }}</p>
+                </div>
+
+                <!-- Responses Section -->
+                <div class="dashboard-card border rounded shadow-sm">
+                    <h5 class="fw-bold mb-4"><i class="bi bi-chat-left-dots me-2 text-primary"></i> Conversation History</h5>
+
+                    {% if responses %}
+                        <div class="d-flex flex-column gap-3 mb-4">
+                            {% for resp in responses %}
+                                <div class="p-3 rounded-3 {% if resp.author.role == 'admin' %}bg-primary-subtle border-start border-4 border-primary ms-3{% else %}bg-body-secondary me-3{% endif %}">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <span class="fw-bold">
+                                            {% if resp.author.role == 'admin' %}
+                                                <i class="bi bi-shield-check text-primary me-1"></i> Admin ({{ resp.author.username }})
+                                            {% else %}
+                                                <i class="bi bi-person me-1"></i> {{ resp.author.username }}
+                                            {% endif %}
+                                        </span>
+                                        <small class="text-muted">{{ resp.created_at.strftime('%b %d, %H:%M') }}</small>
+                                    </div>
+                                    <p class="mb-0 small" style="white-space: pre-line;">{{ resp.message }}</p>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4 text-muted">
+                            <i class="bi bi-chat-square-dots fs-1 d-block mb-2 text-secondary opacity-50"></i>
+                            No replies yet on this ticket.
+                        </div>
+                    {% endif %}
+
+                    <!-- Reply Form -->
+                    <form action="{{ url_for('response.add_reply', complaint_id=complaint.id) }}" method="POST" class="mt-4 border-top pt-3">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Post a Response</label>
+                            <textarea name="message" class="form-control" rows="3" placeholder="Type your response here..." required></textarea>
+                        </div>
+                        {% if role == 'admin' %}
+                            <div class="row align-items-center g-2 mb-3">
+                                <div class="col-auto">
+                                    <label class="col-form-label fw-bold">Update Status:</label>
+                                </div>
+                                <div class="col-auto">
+                                    <select name="status" class="form-select form-select-sm">
+                                        <option value="Pending" {% if complaint.status == 'Pending' %}selected{% endif %}>Pending</option>
+                                        <option value="In Progress" {% if complaint.status == 'In Progress' %}selected{% endif %}>In Progress</option>
+                                        <option value="Resolved" {% if complaint.status == 'Resolved' %}selected{% endif %}>Resolved</option>
+                                    </select>
+                                </div>
+                            </div>
+                        {% endif %}
+                        <button type="submit" class="btn btn-primary px-4"><i class="bi bi-send me-1"></i> Send Reply</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Sidebar Details Column -->
+            <div class="col-lg-4">
+                <div class="dashboard-card border rounded shadow-sm">
+                    <h5 class="fw-bold mb-3"><i class="bi bi-info-circle me-2 text-primary"></i> Ticket Information</h5>
+                    <ul class="list-group list-group-flush bg-transparent">
+                        <li class="list-group-item bg-transparent d-flex justify-content-between px-0">
+                            <span class="text-muted">Ticket ID</span>
+                            <span class="fw-bold">#TKT-{{ complaint.id }}</span>
+                        </li>
+                        <li class="list-group-item bg-transparent d-flex justify-content-between px-0">
+                            <span class="text-muted">Customer</span>
+                            <span>{{ complaint.author.username }}</span>
+                        </li>
+                        <li class="list-group-item bg-transparent d-flex justify-content-between px-0">
+                            <span class="text-muted">Category</span>
+                            <span>{{ complaint.category }}</span>
+                        </li>
+                        <li class="list-group-item bg-transparent d-flex justify-content-between px-0">
+                            <span class="text-muted">Sentiment AI</span>
+                            <span class="badge {% if complaint.sentiment == 'Positive' %}bg-success{% elif complaint.sentiment == 'Urgent' %}bg-danger{% else %}bg-secondary{% endif %}">
+                                {{ complaint.sentiment }}
+                            </span>
+                        </li>
+                        <li class="list-group-item bg-transparent d-flex justify-content-between px-0">
+                            <span class="text-muted">Created</span>
+                            <span>{{ complaint.created_at.strftime('%Y-%m-%d') }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

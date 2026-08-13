@@ -12,22 +12,37 @@
             </div>
         </div>
         <ul>
-            <li>
-                <a href="{{ url_for('user.dashboard') }}">Dashboard</a>
+            <li class="{% if current_page == 'dashboard' %}active{% endif %}">
+                <a href="{{ url_for('user.dashboard') }}"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+            </li>
+            <li class="{% if current_page == 'complaints' %}active{% endif %}">
+                <a href="{{ url_for('complaint.complaints') }}"><i class="bi bi-ticket-detailed me-2"></i> Complaints</a>
+            </li>
+            {% if role == 'admin' %}
+            <li class="{% if current_page == 'analytics' %}active{% endif %}">
+                <a href="{{ url_for('report.analytics') }}"><i class="bi bi-bar-chart-line me-2"></i> Analytics</a>
+            </li>
+            <li class="{% if current_page == 'reports' %}active{% endif %}">
+                <a href="{{ url_for('report.reports') }}"><i class="bi bi-file-earmark-text me-2"></i> Reports</a>
+            </li>
+            <li class="{% if current_page == 'users' %}active{% endif %}">
+                <a href="{{ url_for('admin.users') }}"><i class="bi bi-people me-2"></i> Users</a>
+            </li>
+            {% endif %}
+            <li class="{% if current_page == 'feedback' %}active{% endif %}">
+                <a href="{{ url_for('feedback.feedback_page') }}"><i class="bi bi-star me-2"></i> Feedback</a>
+            </li>
+            <li class="{% if current_page == 'faq' %}active{% endif %}">
+                <a href="{{ url_for('complaint.faq') }}"><i class="bi bi-question-circle me-2"></i> Help Center</a>
+            </li>
+            <li class="{% if current_page == 'notifications' %}active{% endif %}">
+                <a href="{{ url_for('notification.notifications') }}"><i class="bi bi-bell me-2"></i> Notifications {% if unread_notifications_count > 0 %}<span class="badge bg-danger rounded-pill ms-auto">{{ unread_notifications_count }}</span>{% endif %}</a>
+            </li>
+            <li class="{% if current_page == 'settings' %}active{% endif %}">
+                <a href="{{ url_for('user.settings') }}"><i class="bi bi-gear me-2"></i> Settings</a>
             </li>
             <li>
-                <a href="{{ url_for('complaint.complaints') }}">Complaints</a>
-            </li>
-            <li>
-                <a href="{{ url_for('notification.notifications') }}" style="position:relative;">
-                    Notifications <span class="notif-badge"></span>
-                </a>
-            </li>
-            <li>
-                <a href="{{ url_for('user.settings') }}">Settings</a>
-            </li>
-            <li>
-                <a href="{{ url_for('auth.logout') }}">Logout</a>
+                <a href="{{ url_for('auth.logout') }}"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
             </li>
         </ul>
     </nav>
@@ -37,45 +52,95 @@
         <!-- Navbar -->
         <nav class="navbar navbar-custom mb-4 px-3 py-2">
             <div class="d-flex align-items-center gap-3 w-100">
-                <button id="sidebarCollapse" class="btn btn-toggle" style="font-size:1.3rem;line-height:1;padding:6px 12px;">
-                    ☰
-                </button>
-                <span class="fw-bold welcome-text">
-                    <span class="badge" style="background:linear-gradient(135deg,#0891b2,#7c3aed);font-size:.75rem;padding:4px 10px;border-radius:20px;margin-right:8px;">USER</span>
-                    {{ name }}
-                </span>
-                <div class="ms-auto">
-                    <button class="btn btn-toggle" id="darkModeToggle" title="Toggle Theme" style="font-size:1.2rem;line-height:1;padding:6px 12px;">
-                        🌙
-                    </button>
+                <button id="sidebarCollapse" class="btn btn-toggle" style="font-size:1.3rem;line-height:1;padding:6px 12px;">☰</button>
+                <div class="ms-auto d-flex align-items-center gap-2">
+                    <button class="btn btn-toggle" id="darkModeToggle" title="Toggle Theme">🌙</button>
                 </div>
             </div>
         </nav>
 
         <h3 class="fw-bold mb-4" style="color:var(--text-main);">
-            Feedback
+            <i class="bi bi-star text-warning me-2"></i> Customer Feedback
         </h3>
 
-        <div class="dashboard-card border rounded shadow-sm">
-            <p>We value your feedback. Let us know how we can improve our services.</p>
-            <form action="{{ url_for('user.dashboard') }}" method="GET">
-                <div class="mb-3">
-                    <label class="form-label fw-600">Rate your experience</label>
-                    <select class="form-select" name="rating" style="max-width:200px;">
-                        <option value="5">5 - Excellent</option>
-                        <option value="4">4 - Good</option>
-                        <option value="3">3 - Average</option>
-                        <option value="2">2 - Poor</option>
-                        <option value="1">1 - Terrible</option>
-                    </select>
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="dashboard-card border rounded shadow-sm">
+                    <h5 class="fw-bold mb-3">Rate Your Experience</h5>
+                    <p class="text-muted small mb-4">Your feedback helps us continuously refine our enterprise support analysis workflow.</p>
+                    
+                    <form action="{{ url_for('feedback.feedback_page') }}" method="POST">
+                        <div class="mb-4">
+                            <label class="form-label fw-bold d-block">Rating</label>
+                            <div class="star-rating fs-2 d-flex gap-2">
+                                <input type="hidden" name="rating" id="ratingInput" value="5">
+                                <i class="bi bi-star-fill text-warning cursor-pointer star-btn" data-value="1"></i>
+                                <i class="bi bi-star-fill text-warning cursor-pointer star-btn" data-value="2"></i>
+                                <i class="bi bi-star-fill text-warning cursor-pointer star-btn" data-value="3"></i>
+                                <i class="bi bi-star-fill text-warning cursor-pointer star-btn" data-value="4"></i>
+                                <i class="bi bi-star-fill text-warning cursor-pointer star-btn" data-value="5"></i>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Comments & Suggestions</label>
+                            <textarea name="comments" class="form-control" rows="4" placeholder="Tell us what you liked or what we can improve..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary px-4 rounded-pill"><i class="bi bi-send me-1"></i> Submit Feedback</button>
+                    </form>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label fw-600">Comments</label>
-                    <textarea name="comments" class="form-control" rows="4" placeholder="Your comments..."></textarea>
+            </div>
+
+            {% if role == 'admin' %}
+            <div class="col-lg-6">
+                <div class="dashboard-card border rounded shadow-sm">
+                    <h5 class="fw-bold mb-4">Recent User Feedbacks</h5>
+                    {% if feedbacks %}
+                        <div class="d-flex flex-column gap-3">
+                            {% for fb in feedbacks %}
+                                <div class="p-3 border rounded bg-body-tertiary">
+                                    <div class="d-flex justify-content-between align-items-center mb-1">
+                                        <span class="fw-bold">{{ fb.author.username }}</span>
+                                        <div class="text-warning small">
+                                            {% for i in range(fb.rating) %}<i class="bi bi-star-fill"></i>{% endfor %}
+                                        </div>
+                                    </div>
+                                    <p class="mb-0 text-muted small">{{ fb.comment }}</p>
+                                    <small class="text-muted d-block mt-2" style="font-size:0.75rem;">{{ fb.created_at.strftime('%b %d, %Y') }}</small>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-muted text-center py-4">No feedback received yet.</p>
+                    {% endif %}
                 </div>
-                <button type="submit" class="btn btn-primary px-4">Submit Feedback</button>
-            </form>
+            </div>
+            {% endif %}
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const stars = document.querySelectorAll('.star-btn');
+    const ratingInput = document.getElementById('ratingInput');
+
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            const val = parseInt(star.getAttribute('data-value'));
+            ratingInput.value = val;
+            stars.forEach((s, idx) => {
+                if (idx < val) {
+                    s.classList.remove('bi-star');
+                    s.classList.add('bi-star-fill', 'text-warning');
+                } else {
+                    s.classList.remove('bi-star-fill', 'text-warning');
+                    s.classList.add('bi-star');
+                }
+            });
+        });
+    });
+});
+</script>
 {% endblock %}

@@ -10,7 +10,9 @@ from extensions import db
 from werkzeug.security import generate_password_hash
 from models.user import User, Notification
 from models.complaint import Complaint
-
+from models.feedback import Feedback
+from models.response import Response
+from models.audit import AuditLog
 
 def create_app():
     app = Flask(__name__, 
@@ -49,6 +51,8 @@ def create_app():
     from routes.admin import admin_bp
     from routes.notification import notification_bp
     from routes.report import report_bp
+    from routes.feedback import feedback_bp
+    from routes.response import response_bp
 
     app.register_blueprint(auth_bp)
     app.register_blueprint(user_bp)
@@ -56,6 +60,8 @@ def create_app():
     app.register_blueprint(admin_bp)
     app.register_blueprint(notification_bp)
     app.register_blueprint(report_bp)
+    app.register_blueprint(feedback_bp)
+    app.register_blueprint(response_bp)
 
     return app
 
@@ -67,9 +73,9 @@ def seed_data():
         db.session.add(user)
         db.session.commit()
         
-        c1 = Complaint(title='Login Issue', description='Cannot login to the portal.', category='Technical Support', priority='High', status='Pending', author=user) # type: ignore
-        c2 = Complaint(title='Billing Error', description='Charged twice for the subscription.', category='Billing', priority='Medium', status='In Progress', author=user) # type: ignore
-        c3 = Complaint(title='Feature Request', description='Please add dark mode.', category='Feature Request', priority='Low', status='Resolved', author=user) # type: ignore
+        c1 = Complaint(title='Login Issue', description='Cannot login to the portal.', category='Technical Support', priority='High', status='Pending', sentiment='Urgent', author=user) # type: ignore
+        c2 = Complaint(title='Billing Error', description='Charged twice for the subscription.', category='Billing', priority='Medium', status='In Progress', sentiment='Negative', author=user) # type: ignore
+        c3 = Complaint(title='Feature Request', description='Please add dark mode feature.', category='Feature Request', priority='Low', status='Resolved', sentiment='Positive', author=user) # type: ignore
         db.session.add_all([c1, c2, c3])
         db.session.commit()
 
@@ -77,6 +83,13 @@ def seed_data():
         n2 = Notification(message='Admin updated ticket #TKT-3 to Resolved.', user_id=user.id) # type: ignore
         n3 = Notification(message='New ticket submitted: #TKT-1 ("Login Issue").', user_id=admin.id) # type: ignore
         db.session.add_all([n1, n2, n3])
+        db.session.commit()
+
+        r1 = Response(message="Hello! Our engineering team is currently investigating the login issue.", complaint_id=c1.id, user_id=admin.id) # type: ignore
+        db.session.add(r1)
+
+        f1 = Feedback(rating=5, comment="Great support platform! Very responsive.", user_id=user.id) # type: ignore
+        db.session.add(f1)
         db.session.commit()
 
 app = create_app()

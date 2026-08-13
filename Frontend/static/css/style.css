@@ -818,9 +818,40 @@ body {
     color: #c4b5fd;
 }
 
-/* Sidebar emoji links */
+/* Sidebar links */
 #sidebar ul li a {
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+/* Star Rating */
+.star-btn {
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+.star-btn:hover {
+    transform: scale(1.25);
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* Global Search Dropdown */
+#globalSearchResults {
+    max-height: 280px;
+    overflow-y: auto;
+    border-radius: 12px;
+}
+
+/* Toast animations */
+.toast-container {
+    z-index: 1090 !important;
+}
+
+/* Landing page extras */
+.max-w-md {
+    max-width: 450px;
+}
+.tracking-wide {
+    letter-spacing: 0.5px;
 }

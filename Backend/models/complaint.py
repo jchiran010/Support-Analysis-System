@@ -8,5 +8,6 @@ class Complaint(db.Model):
     category = db.Column(db.String(50), nullable=False)
     priority = db.Column(db.String(20), nullable=False, default='Low')
     status = db.Column(db.String(20), nullable=False, default='Pending')
+    sentiment = db.Column(db.String(20), nullable=False, default='Neutral')
     created_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)

@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand-icon">S</div>
+            <div>
+                <h5 class="mb-0">Support Analysis</h5>
+                <small style="color:rgba(255,255,255,0.4);font-size:.72rem;">Enterprise Suite</small>
+            </div>
+        </div>
+        <ul>
+            <li class="{% if current_page == 'dashboard' %}active{% endif %}">
+                <a href="{{ url_for('user.dashboard') }}"><i class="bi bi-speedometer2"></i> Dashboard</a>
+            </li>
+            <li class="{% if current_page == 'complaints' %}active{% endif %}">
+                <a href="{{ url_for('complaint.complaints') }}"><i class="bi bi-ticket-detailed"></i> Complaints</a>
+            </li>
+            {% if role == 'admin' %}
+            <li class="{% if current_page == 'analytics' %}active{% endif %}">
+                <a href="{{ url_for('report.analytics') }}"><i class="bi bi-bar-chart-line"></i> Analytics</a>
+            </li>
+            <li class="{% if current_page == 'reports' %}active{% endif %}">
+                <a href="{{ url_for('report.reports') }}"><i class="bi bi-file-earmark-text"></i> Reports</a>
+            </li>
+            <li class="{% if current_page == 'users' %}active{% endif %}">
+                <a href="{{ url_for('admin.users') }}"><i class="bi bi-people"></i> Users</a>
+            </li>
+            {% endif %}
+            <li class="{% if current_page == 'feedback' %}active{% endif %}">
+                <a href="{{ url_for('feedback.feedback_page') }}"><i class="bi bi-star"></i> Feedback</a>
+            </li>
+            <li class="{% if current_page == 'faq' %}active{% endif %}">
+                <a href="{{ url_for('complaint.faq') }}"><i class="bi bi-question-circle"></i> Help Center</a>
+            </li>
+            <li class="{% if current_page == 'notifications' %}active{% endif %}">
+                <a href="{{ url_for('notification.notifications') }}"><i class="bi bi-bell"></i> Notifications {% if unread_notifications_count > 0 %}<span class="badge bg-danger rounded-pill ms-auto">{{ unread_notifications_count }}</span>{% endif %}</a>
+            </li>
+            <li class="{% if current_page == 'settings' %}active{% endif %}">
+                <a href="{{ url_for('user.settings') }}"><i class="bi bi-gear"></i> Settings</a>
+            </li>
+            <li>
+                <a href="{{ url_for('auth.logout') }}"><i class="bi bi-box-arrow-right"></i> Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div id="content">
+        <nav class="navbar navbar-custom mb-4 px-3 py-2">
+            <div class="d-flex align-items-center gap-3 w-100">
+                <button id="sidebarCollapse" class="btn btn-toggle" style="font-size:1.3rem;line-height:1;padding:6px 12px;">☰</button>
+                <div class="ms-auto d-flex align-items-center gap-2">
+                    <button class="btn btn-toggle" id="darkModeToggle" title="Toggle Theme">🌙</button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="text-center py-4 mb-4">
+            <h2 class="fw-bold"><i class="bi bi-question-circle text-primary me-2"></i> Frequently Asked Questions</h2>
+            <p class="text-muted">Find quick answers to common support questions and system features.</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-9">
+                <div class="accordion accordion-flush dashboard-card border rounded p-3" id="faqAccordion">
+                    <div class="accordion-item bg-transparent">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed bg-transparent fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                How do I submit a support ticket?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted">
+                                Simply navigate to the <strong>Complaints</strong> tab in the sidebar and click on "Submit New Complaint". Fill out the required details such as Category, Priority, and Description, then submit.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item bg-transparent">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed bg-transparent fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                How long does it take for a ticket to be resolved?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted">
+                                Tickets marked with <strong>High Priority</strong> are reviewed within 2–4 hours. Medium and Low priority tickets are typically handled within 24 hours.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item bg-transparent">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed bg-transparent fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                Can I track the status of my ticket?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted">
+                                Yes! Click on any ticket in your dashboard or history page to view full details, real-time status updates, and admin responses.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item bg-transparent">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed bg-transparent fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                How do notifications work?
+                            </button>
+                        </h2>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted">
+                                You receive automatic in-app notifications whenever an admin updates your ticket status or replies to your issue.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

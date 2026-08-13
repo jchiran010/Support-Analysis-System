@@ -1,18 +1,81 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="splash-screen">
-    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Support Analysis System Logo" class="splash-logo mb-4">
-    <div class="splash-title">Support Analysis System</div>
-    <p class="splash-subtitle">Loading enterprise modules...</p>
-    <div class="loader">
-        <div class="loader-bar"></div>
-    </div>
-</div>
+<div class="landing-page bg-dark text-white min-vh-100 d-flex flex-column justify-content-between position-relative overflow-hidden">
+    <!-- Background Elements -->
+    <div class="position-absolute top-0 start-50 translate-middle-x rounded-circle blur-3xl opacity-20" 
+         style="width: 600px; height: 600px; background: radial-gradient(circle, #3b82f6 0%, #7c3aed 100%);"></div>
 
-<script>
-    setTimeout(function() {
-        window.location.href = "{{ url_for('auth.login') }}";
-    }, 5000);
-</script>
+    <!-- Header Navigation -->
+    <header class="container py-4 position-relative z-1">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-3">
+                <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="rounded-circle shadow" style="width: 42px; height: 42px; object-fit: cover;">
+                <span class="fw-bold fs-5 tracking-wide text-white">Support<span class="text-primary">Analysis</span></span>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <a href="{{ url_for('auth.login') }}" class="btn btn-outline-light rounded-pill px-4 btn-sm fw-semibold">Sign In</a>
+                <a href="{{ url_for('auth.register') }}" class="btn btn-primary rounded-pill px-4 btn-sm fw-semibold shadow">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="container my-auto py-5 position-relative z-1">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-7 text-center text-lg-start">
+                <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-2 mb-3 fw-medium">
+                    <i class="bi bi-sparkles me-1"></i> Next-Gen Enterprise Support Platform
+                </span>
+                <h1 class="display-4 fw-black text-white lh-sm mb-4">
+                    Transform Customer Feedback into <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">Actionable Intelligence</span>
+                </h1>
+                <p class="lead text-gray-300 mb-5 max-w-xl mx-auto mx-lg-0" style="color: #94a3b8;">
+                    Streamline ticket resolution, automate sentiment analytics, and empower your support teams with real-time insight dashboards.
+                </p>
+                <div class="d-flex flex-sm-row flex-column gap-3 justify-content-center justify-content-lg-start">
+                    <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg rounded-pill px-5 py-3 fw-bold shadow-lg">
+                        Launch Demo System <i class="bi bi-arrow-right ms-2"></i>
+                    </a>
+                    <a href="{{ url_for('auth.login') }}" class="btn btn-outline-secondary btn-lg rounded-pill px-5 py-3 fw-bold text-white border-secondary">
+                        Sign In to Portal
+                    </a>
+                </div>
+            </div>
+            <!-- Interactive Visual Card -->
+            <div class="col-lg-5">
+                <div class="dashboard-card p-4 rounded-4 bg-dark-subtle border border-secondary border-opacity-20 shadow-2xl backdrop-blur">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="spinner-grow spinner-grow-sm text-success" role="status"></span>
+                            <span class="fw-semibold text-white small">Live Sentiment Feed</span>
+                        </div>
+                        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2 py-1">Realtime AI</span>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="p-3 rounded-3 bg-secondary bg-opacity-10 border border-secondary border-opacity-10">
+                            <div class="d-flex justify-content-between small text-muted mb-1">
+                                <span>Ticket #TKT-104</span>
+                                <span class="text-success fw-bold">Positive (98%)</span>
+                            </div>
+                            <div class="fw-medium text-white small">"The support response was incredibly fast!"</div>
+                        </div>
+                        <div class="p-3 rounded-3 bg-secondary bg-opacity-10 border border-secondary border-opacity-10">
+                            <div class="d-flex justify-content-between small text-muted mb-1">
+                                <span>Ticket #TKT-105</span>
+                                <span class="text-danger fw-bold">Urgent Attention</span>
+                            </div>
+                            <div class="fw-medium text-white small">"Login error during monthly checkout"</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="container py-4 text-center text-muted border-top border-secondary border-opacity-20 position-relative z-1 small">
+        &copy; 2026 Support Analysis System. Engineered for High-Performance Teams.
+    </footer>
+</div>
 {% endblock %}

@@ -13,34 +13,36 @@
         </div>
         <ul>
             <li class="{% if current_page == 'dashboard' %}active{% endif %}">
-                <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                <a href="{{ url_for('user.dashboard') }}"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
             </li>
             <li class="{% if current_page == 'complaints' %}active{% endif %}">
-                <a href="{{ url_for('complaints') }}">Complaints</a>
+                <a href="{{ url_for('complaint.complaints') }}"><i class="bi bi-ticket-detailed me-2"></i> Complaints</a>
             </li>
             {% if role == 'admin' %}
             <li class="{% if current_page == 'analytics' %}active{% endif %}">
-                <a href="{{ url_for('analytics') }}">Analytics</a>
+                <a href="{{ url_for('report.analytics') }}"><i class="bi bi-bar-chart-line me-2"></i> Analytics</a>
             </li>
             <li class="{% if current_page == 'reports' %}active{% endif %}">
-                <a href="{{ url_for('reports') }}">Reports</a>
+                <a href="{{ url_for('report.reports') }}"><i class="bi bi-file-earmark-text me-2"></i> Reports</a>
             </li>
             <li class="{% if current_page == 'users' %}active{% endif %}">
-                <a href="{{ url_for('users') }}">Users</a>
+                <a href="{{ url_for('admin.users') }}"><i class="bi bi-people me-2"></i> Users</a>
             </li>
             {% endif %}
+            <li class="{% if current_page == 'feedback' %}active{% endif %}">
+                <a href="{{ url_for('feedback.feedback_page') }}"><i class="bi bi-star me-2"></i> Feedback</a>
+            </li>
+            <li class="{% if current_page == 'faq' %}active{% endif %}">
+                <a href="{{ url_for('complaint.faq') }}"><i class="bi bi-question-circle me-2"></i> Help Center</a>
+            </li>
             <li class="{% if current_page == 'notifications' %}active{% endif %}">
-                <a href="{{ url_for('notifications') }}" style="position:relative;">
-                    Notifications
-                    {% if unread_notifications_count > 0 %}<span class="badge bg-danger rounded-pill"
-                        style="position:absolute;top:50%;right:10px;transform:translateY(-50%);font-size:0.65rem;">{{
-                        unread_notifications_count }}</span>{% endif %}</a>
+                <a href="{{ url_for('notification.notifications') }}"><i class="bi bi-bell me-2"></i> Notifications {% if unread_notifications_count > 0 %}<span class="badge bg-danger rounded-pill ms-auto">{{ unread_notifications_count }}</span>{% endif %}</a>
             </li>
             <li class="{% if current_page == 'settings' %}active{% endif %}">
-                <a href="{{ url_for('settings') }}">Settings</a>
+                <a href="{{ url_for('user.settings') }}"><i class="bi bi-gear me-2"></i> Settings</a>
             </li>
             <li>
-                <a href="{{ url_for('logout') }}">Logout</a>
+                <a href="{{ url_for('auth.logout') }}"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
             </li>
         </ul>
     </nav>
@@ -51,23 +53,23 @@
         <!-- Navbar -->
         <nav class="navbar navbar-custom mb-4 px-3 py-2">
             <div class="d-flex align-items-center gap-3 w-100">
-                <button id="sidebarCollapse" class="btn btn-toggle"
-                    style="font-size:1.3rem;line-height:1;padding:6px 12px;">
+                <button id="sidebarCollapse" class="btn btn-toggle" style="font-size:1.3rem;line-height:1;padding:6px 12px;">
                     ☰
                 </button>
-                <span class="fw-bold welcome-text">
+                <div class="position-relative flex-grow-1 max-w-md">
+                    <input type="text" id="globalSearchInput" class="form-control form-control-sm rounded-pill px-3" placeholder="Search tickets (Ctrl+K)...">
+                    <div id="globalSearchResults" class="dropdown-menu w-100 shadow mt-1"></div>
+                </div>
+                <span class="fw-bold welcome-text ms-2">
                     {% if role == 'admin' %}
-                    <span class="badge"
-                        style="background:linear-gradient(135deg,#2563eb,#7c3aed);font-size:.75rem;padding:4px 10px;border-radius:20px;margin-right:8px;">ADMIN</span>
+                    <span class="badge" style="background:linear-gradient(135deg,#2563eb,#7c3aed);font-size:.75rem;padding:4px 10px;border-radius:20px;margin-right:8px;">ADMIN</span>
                     {% else %}
-                    <span class="badge"
-                        style="background:linear-gradient(135deg,#0891b2,#7c3aed);font-size:.75rem;padding:4px 10px;border-radius:20px;margin-right:8px;">USER</span>
+                    <span class="badge" style="background:linear-gradient(135deg,#0891b2,#7c3aed);font-size:.75rem;padding:4px 10px;border-radius:20px;margin-right:8px;">USER</span>
                     {% endif %}
                     {{ name }}
                 </span>
                 <div class="ms-auto">
-                    <button class="btn btn-toggle" id="darkModeToggle" title="Toggle Theme"
-                        style="font-size:1.2rem;line-height:1;padding:6px 12px;">
+                    <button class="btn btn-toggle" id="darkModeToggle" title="Toggle Theme" style="font-size:1.2rem;line-height:1;padding:6px 12px;">
                         🌙
                     </button>
                 </div>
@@ -89,10 +91,10 @@
                         <div class="skeleton" style="height:12px;width:80%;"></div>
                     </div>
                     <div class="real-content content-hidden">
-                        <div class="stat-emoji"></div>
+                        <div class="stat-emoji">📊</div>
                         <h6 class="stat-label">TOTAL COMPLAINTS</h6>
                         <div class="stat-value">{{ stats.total }}</div>
-                        <div class="stat-change" style="color:#4ade80;">System wide total</div>
+                        <div class="stat-change text-success">System wide total</div>
                     </div>
                 </div>
             </div>
@@ -104,10 +106,10 @@
                         <div class="skeleton" style="height:12px;width:80%;"></div>
                     </div>
                     <div class="real-content content-hidden">
-                        <div class="stat-emoji"></div>
+                        <div class="stat-emoji">⏳</div>
                         <h6 class="stat-label">PENDING APPROVAL</h6>
                         <div class="stat-value text-warning">{{ stats.pending }}</div>
-                        <div class="stat-change" style="color:#f87171;">Awaiting review</div>
+                        <div class="stat-change text-danger">Awaiting review</div>
                     </div>
                 </div>
             </div>
@@ -119,10 +121,10 @@
                         <div class="skeleton" style="height:12px;width:80%;"></div>
                     </div>
                     <div class="real-content content-hidden">
-                        <div class="stat-emoji"></div>
+                        <div class="stat-emoji">✅</div>
                         <h6 class="stat-label">RESOLVED</h6>
                         <div class="stat-value text-success">{{ stats.resolved }}</div>
-                        <div class="stat-change" style="color:#4ade80;">Successfully closed</div>
+                        <div class="stat-change text-success">Successfully closed</div>
                     </div>
                 </div>
             </div>
@@ -134,10 +136,10 @@
                         <div class="skeleton" style="height:12px;width:80%;"></div>
                     </div>
                     <div class="real-content content-hidden">
-                        <div class="stat-emoji"></div>+
+                        <div class="stat-emoji">🚨</div>
                         <h6 class="stat-label">HIGH PRIORITY</h6>
                         <div class="stat-value text-danger">{{ stats.high_priority }}</div>
-                        <div class="stat-change" style="color:var(--text-muted);">● Requires immediate action</div>
+                        <div class="stat-change text-muted">● Requires immediate action</div>
                     </div>
                 </div>
             </div>
@@ -181,7 +183,7 @@
                         <div class="skeleton" style="height:48px;width:40%;"></div>
                     </div>
                     <div class="real-content content-hidden">
-                        <div class="stat-emoji"></div>
+                        <div class="stat-emoji">🎫</div>
                         <h6 class="stat-label">MY TICKETS</h6>
                         <div class="stat-value">{{ stats.my_tickets }}</div>
                     </div>
@@ -194,7 +196,7 @@
                         <div class="skeleton" style="height:48px;width:40%;"></div>
                     </div>
                     <div class="real-content content-hidden">
-                        <div class="stat-emoji"></div>
+                        <div class="stat-emoji">🔄</div>
                         <h6 class="stat-label">IN PROGRESS</h6>
                         <div class="stat-value text-warning">{{ stats.in_progress }}</div>
                     </div>
@@ -207,7 +209,7 @@
                         <div class="skeleton" style="height:48px;width:40%;"></div>
                     </div>
                     <div class="real-content content-hidden">
-                        <div class="stat-emoji"></div>
+                        <div class="stat-emoji">✅</div>
                         <h6 class="stat-label">RESOLVED</h6>
                         <div class="stat-value text-success">{{ stats.resolved }}</div>
                     </div>
@@ -229,20 +231,17 @@
                 </div>
             </div>
             <div class="col-lg-4">
-                <div
-                    class="dashboard-card border rounded shadow-sm h-100 d-flex flex-column align-items-center justify-content-center text-center">
+                <div class="dashboard-card border rounded shadow-sm h-100 d-flex flex-column align-items-center justify-content-center text-center p-4">
                     <div class="skeleton-wrapper w-100">
                         <div class="skeleton mb-4 mx-auto" style="height:80px;width:80px;border-radius:50%;"></div>
                         <div class="skeleton mb-3 mx-auto" style="height:22px;width:60%;"></div>
                         <div class="skeleton mx-auto" style="height:44px;width:80%;border-radius:10px;"></div>
                     </div>
                     <div class="real-content content-hidden w-100">
-                        <div style="font-size:3.5rem;margin-bottom:.75rem;"></div>
-                        <h5 class="chart-title mb-2">Need Help?</h5>
-                        <p class="mb-4" style="font-size:.88rem;color:var(--text-muted);">Our support team is ready to
-                            assist you.</p>
-                        <button class="btn btn-primary w-100" data-bs-toggle="modal"
-                            data-bs-target="#newComplaintModal">
+                        <div style="font-size:3rem;margin-bottom:.5rem;">💡</div>
+                        <h5 class="chart-title mb-2">Need Assistance?</h5>
+                        <p class="mb-4" style="font-size:.88rem;color:var(--text-muted);">Our support team resolves issues promptly.</p>
+                        <button class="btn btn-primary w-100 shadow" data-bs-toggle="modal" data-bs-target="#newComplaintModal">
                             Create New Ticket
                         </button>
                     </div>
@@ -253,18 +252,16 @@
         <!-- Complaint Modal -->
         <div class="modal fade" id="newComplaintModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content ">
+                <div class="modal-content">
                     <div class="modal-header border-0 pb-0">
                         <h5 class="modal-title fw-bold">Submit New Complaint</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            style="filter:invert(1);"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" style="filter:invert(1);"></button>
                     </div>
-                    <form action="{{ url_for('add_complaint') }}" method="POST">
+                    <form action="{{ url_for('complaint.add_complaint') }}" method="POST">
                         <div class="modal-body pt-3">
                             <div class="mb-3">
                                 <label class="form-label fw-600">Subject</label>
-                                <input type="text" name="title" class="form-control"
-                                    placeholder="Briefly describe your issue" required>
+                                <input type="text" name="title" class="form-control" placeholder="Briefly describe your issue" required>
                             </div>
                             <div class="row g-3 mb-3">
                                 <div class="col-6">
@@ -287,8 +284,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label fw-600">Description</label>
-                                <textarea name="description" class="form-control" rows="3"
-                                    placeholder="Provide more details..." required></textarea>
+                                <textarea name="description" class="form-control" rows="3" placeholder="Provide more details..." required></textarea>
                             </div>
                         </div>
                         <div class="modal-footer border-0">
@@ -316,7 +312,7 @@
                             <h5 class="fw-bold mb-0" style="color:var(--text-main);">
                                 {% if role == 'admin' %}Recent Global Tickets{% else %}My Recent Tickets{% endif %}
                             </h5>
-                            <button class="btn btn-primary btn-sm px-3">View All</button>
+                            <a href="{{ url_for('complaint.complaints') }}" class="btn btn-primary btn-sm px-3">View All</a>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover align-middle mb-0">
@@ -336,35 +332,31 @@
                                     {% for complaint in recent_complaints %}
                                     <tr>
                                         <td><code>#TKT-{{ complaint.id }}</code></td>
-                                        {% if role == 'admin' %}<td>{{ complaint.author.username.title() }}</td>{% endif
-                                        %}
+                                        {% if role == 'admin' %}<td>{{ complaint.author.username.title() }}</td>{% endif %}
                                         <td>{{ complaint.title }}</td>
                                         <td>
-                                            <span
-                                                class="cat-badge {% if complaint.category == 'Billing' %}billing{% elif complaint.category == 'Technical Support' %}tech{% else %}feature{% endif %}">
+                                            <span class="cat-badge {% if complaint.category == 'Billing' %}billing{% elif complaint.category == 'Technical Support' %}tech{% else %}feature{% endif %}">
                                                 {{ complaint.category }}
                                             </span>
                                         </td>
                                         <td>
-                                            <span
-                                                class="badge {% if complaint.status == 'Resolved' %}bg-success{% elif complaint.status == 'Pending' %}bg-warning text-dark{% else %}bg-primary{% endif %}">
+                                            <span class="badge {% if complaint.status == 'Resolved' %}bg-success{% elif complaint.status == 'Pending' %}bg-warning text-dark{% else %}bg-primary{% endif %}">
                                                 {{ complaint.status }}
                                             </span>
                                         </td>
                                         <td>
-                                            <span
-                                                class="badge {% if complaint.priority == 'High' %}bg-danger{% elif complaint.priority == 'Medium' %}bg-secondary{% else %}bg-info text-dark{% endif %}">
+                                            <span class="badge {% if complaint.priority == 'High' %}bg-danger{% elif complaint.priority == 'Medium' %}bg-secondary{% else %}bg-info text-dark{% endif %}">
                                                 {{ complaint.priority }}
                                             </span>
                                         </td>
-                                        <td style="font-size:.85rem;color:var(--text-muted);">{{
-                                            complaint.created_at.strftime('%Y-%m-%d') }}</td>
-                                        <td><button class="btn btn-sm btn-toggle px-2"></button></td>
+                                        <td style="font-size:.85rem;color:var(--text-muted);">{{ complaint.created_at.strftime('%Y-%m-%d') }}</td>
+                                        <td>
+                                            <a href="{{ url_for('complaint.complaint_detail', complaint_id=complaint.id) }}" class="btn btn-sm btn-outline-primary rounded-pill px-3">View</a>
+                                        </td>
                                     </tr>
                                     {% else %}
                                     <tr>
-                                        <td colspan="{% if role == 'admin' %}8{% else %}7{% endif %}"
-                                            class="text-center text-muted py-4">No recent complaints found.</td>
+                                        <td colspan="{% if role == 'admin' %}8{% else %}7{% endif %}" class="text-center text-muted py-4">No recent complaints found.</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -375,93 +367,70 @@
             </div>
         </div>
 
-        <!-- Toast -->
-        <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index:9999;">
-            <div id="successToast" class="toast align-items-center text-white border-0" role="alert"
-                style="background:linear-gradient(135deg,#22c55e,#16a34a);border-radius:12px;">
-                <div class="d-flex">
-                    <div class="toast-body fw-bold">Complaint submitted successfully!</div>
-                    <button type="button" class="btn-close btn-close-white me-2 m-auto"
-                        data-bs-dismiss="toast"></button>
-                </div>
-            </div>
-        </div>
-
     </div>
 </div>
 {% endblock %}
 
 {% block scripts %}
-
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Skeleton loader reveal after 1.8s
         setTimeout(() => {
             document.querySelectorAll('.skeleton-wrapper').forEach(el => el.style.display = 'none');
             document.querySelectorAll('.real-content').forEach(el => {
                 el.classList.remove('content-hidden');
                 el.style.animation = 'fadeInUp 0.5s ease forwards';
             });
-        }, 1800);
+        }, 1200);
 
-
-        // Chart.js defaults
         Chart.defaults.color = '#94a3b8';
         Chart.defaults.borderColor = 'rgba(148,163,184,0.15)';
         Chart.defaults.font.family = "'Inter', sans-serif";
 
-        // Admin Charts
         const trendsEl = document.getElementById('trendsChart');
         if (trendsEl) {
             new Chart(trendsEl, {
                 type: 'bar',
                 data: {
-                labels: JSON.parse('{{ trend_labels|tojson|safe|replace("\'", "\\\'") }}'),
-                datasets: [
-                    { label: 'Received', data: JSON.parse('{{ trend_values|tojson|safe|replace("\'", "\\\'") }}'), backgroundColor: 'rgba(37,99,235,0.8)', borderRadius: 8 }
-                ]
+                    labels: JSON.parse('{{ trend_labels|tojson|safe|replace("\'", "\\\'") }}'),
+                    datasets: [
+                        { label: 'Received', data: JSON.parse('{{ trend_values|tojson|safe|replace("\'", "\\\'") }}'), backgroundColor: 'rgba(37,99,235,0.8)', borderRadius: 8 }
+                    ]
                 },
-        options: {
-        responsive: true, maintainAspectRatio: false,
-        animation: { duration: 1500 },
-        plugins: { legend: { position: 'top' } },
-        scales: {
-            x: { grid: { display: false } },
-            y: { beginAtZero: true, grid: { color: 'rgba(148,163,184,0.1)' } }
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    animation: { duration: 1500 },
+                    plugins: { legend: { position: 'top' } },
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: { beginAtZero: true, grid: { color: 'rgba(148,163,184,0.1)' } }
+                    }
+                }
+            });
         }
-    }
-        });
-    }
 
-    const catEl = document.getElementById('categoryChart');
-    if (catEl) {
-        new Chart(catEl, {
-            type: 'doughnut',
-            data: {
-                labels: ['Technical Support', 'Billing', 'Feature Request', 'Other'],
-                datasets: [{ data: JSON.parse('{{ cat_counts|tojson|safe|replace("\'", "\\\'") }}'), backgroundColor: ['#2563EB', '#10B981', '#F59E0B', '#94a3b8'], borderWidth: 0, hoverOffset: 12 }]
-            },
-    options: { responsive: true, maintainAspectRatio: false, animation: { duration: 1500 }, cutout: '65%', plugins: { legend: { position: 'bottom' } } }
-        });
-    }
+        const catEl = document.getElementById('categoryChart');
+        if (catEl) {
+            new Chart(catEl, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Technical Support', 'Billing', 'Feature Request', 'Other'],
+                    datasets: [{ data: JSON.parse('{{ cat_counts|tojson|safe|replace("\'", "\\\'") }}'), backgroundColor: ['#2563EB', '#10B981', '#F59E0B', '#94a3b8'], borderWidth: 0, hoverOffset: 12 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, animation: { duration: 1500 }, cutout: '65%', plugins: { legend: { position: 'bottom' } } }
+            });
+        }
 
-    // User Chart
-    const userEl = document.getElementById('userTrendsChart');
-    if (userEl) {
-        new Chart(userEl, {
-            type: 'line',
-            data: {
-                labels: JSON.parse('{{ trend_labels|tojson|safe|replace("\'", "\\\'") }}'),
-                datasets: [{ label: 'My Complaints', data: JSON.parse('{{ trend_values|tojson|safe|replace("\'", "\\\'") }}'), borderColor: '#7c3aed', backgroundColor: 'rgba(124,58,237,0.12)', fill: true, tension: 0.45, pointRadius: 5, pointHoverRadius: 8 }]
-            },
-    options: { responsive: true, maintainAspectRatio: false, animation: { duration: 1500 }, scales: { x: { grid: { display: false } }, y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
-        });
-    }
-});
-
-    function showToast() {
-        const toast = new bootstrap.Toast(document.getElementById('successToast'), { delay: 4000 });
-        toast.show();
-    }
+        const userEl = document.getElementById('userTrendsChart');
+        if (userEl) {
+            new Chart(userEl, {
+                type: 'line',
+                data: {
+                    labels: JSON.parse('{{ trend_labels|tojson|safe|replace("\'", "\\\'") }}'),
+                    datasets: [{ label: 'My Complaints', data: JSON.parse('{{ trend_values|tojson|safe|replace("\'", "\\\'") }}'), borderColor: '#7c3aed', backgroundColor: 'rgba(124,58,237,0.12)', fill: true, tension: 0.45, pointRadius: 5, pointHoverRadius: 8 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, animation: { duration: 1500 }, scales: { x: { grid: { display: false } }, y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+            });
+        }
+    });
 </script>
 {% endblock %}
